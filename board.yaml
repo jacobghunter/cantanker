@@ -1,0 +1,283 @@
+units:
+  kx: cx
+  ky: cy
+  px: kx + 4
+  py: ky + 4
+points:
+  mirror: &mirror
+    ref: matrix_inner_num
+    distance: 8kx
+  zones:
+    matrix:
+      key:
+        padding: 1ky
+        spread: 1kx
+      columns:
+        outer:
+          rows.mod.skip: true
+          rows.num:
+            asym: source
+        pinky:
+          key:
+            stagger: 6
+            splay: -5
+          rows.mod.skip: true
+        ring:
+          key.splay: -3
+          key.stagger: 7
+          rows.mod.skip: true
+        middle:
+          key.stagger: 2.5
+        index: 
+          key.stagger: -2.5
+        inner:
+          rows.mod.skip: true
+          key.stagger: -2.5
+      rows:
+        mod:
+        bottom:
+        home:
+        top:
+        num:
+    thumbs:
+      key:
+        padding: 1ky
+        spread: 1kx
+      columns:
+        layer:
+          key:
+            splay: -15
+            shift: [0, -2]
+        nav:
+          key:
+            splay: -35
+            shift: [7.8, -4.8]
+        space:
+          key:
+            width: 1.5kx
+            splay: 65
+            shift: [0,-14]
+        
+      anchor:
+        ref: matrix_inner_mod
+        shift: [2, -2]
+      rows:
+        cluster:
+
+    # for pinky num key encoder
+    right_encoder:
+      anchor:
+        ref: matrix_outer_num
+      key:
+        asym: clone
+        padding: 1ky
+        spread: 1kx
+        footprint: Rotary
+
+    # for left encoder
+    left_encoder:
+      anchor:
+        ref: matrix_inner_bottom
+      key:
+        asym: source
+        shift: [20, 5]
+        padding: 1ky
+        spread: 1kx
+        footprint: Rotary
+
+    mcu:
+      anchor:
+        ref: matrix_inner_num
+        shift: [20, 0]
+      key:
+        footprint: nice!nano_v2
+      
+    power_sw:
+      anchor:
+        ref: mcu
+        shift: [18, 0]
+      key:
+        footprint: Power_Switch_MSK12C02
+    
+    trackpad_socket:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [20, 10]
+      key:
+        asym: clone
+        footprint: PinSocket_1x05_P2.54mm_Vertical
+
+outlines:
+  raw: 
+    - what: rectangle
+      where: true
+      size: [px, py]
+      fillet: 3
+  keys:
+    - what: rectangle
+      where: true
+      size: [kx-0.5,ky-0.5]
+  
+  # hull:
+    # - what: hull
+    #   operation: stack
+    #   fillet: 2
+    #   points: 
+    #     - ref: matrix_outer_num
+    #       shift: [-0.1px,0.1py]
+    #     - ref: matrix_pinky_num
+    #       shift: [0,0.1py]
+    #     - ref: matrix_ring_num
+    #       shift: [0,0.1py]
+    #     - ref: matrix_middle_num
+    #       shift: [0,0.1py]
+    #     - ref: matrix_index_num
+    #       shift: [0,0.1py]  
+    #     - ref: matrix_inner_num
+    #       shift: [0,0.1py]
+    #     - ref: mcu
+    #     - ref: power_sw
+    #       shift: [0.1px,0.1py]
+    #     - ref: left_encoder
+    #       shift: [0.85px,0]
+    #     - ref: thumbs_space_cluster
+    #       shift: [0,-0.1py]
+    #     - ref: thumbs_nav_cluster
+    #       shift: [0.5px,-0.1py]
+    #     - ref: matrix_index_mod
+    #       shift: [0,-0.1py]
+    #     - ref: matrix_middle_mod
+    #       shift: [0,-0.1py]
+    #     - ref: matrix_ring_bottom
+    #     - ref: matrix_outer_bottom
+    #       shift: [-0.1px,-0.1py]
+    # - what: hull
+    #   operation: stack
+    #   fillet: 2
+    #   concavity: 65
+    #   points: 
+    #     - ref: mirror_right_encoder
+    #       shift: [-0.1px,0.1py]
+    #     - ref: mirror_matrix_pinky_num
+    #       shift: [0,0.1py]
+    #     - ref: mirror_matrix_ring_num
+    #       shift: [0,0.1py]
+    #     - ref: mirror_matrix_middle_num
+    #       shift: [0,0.1py]
+    #     - ref: mirror_matrix_index_num
+    #       shift: [0,0.1py]  
+    #     - ref: mirror_matrix_inner_num
+    #       shift: [0,0.1py]
+    #     - ref: mirror_mcu
+    #     - ref: mirror_power_sw
+    #       shift: [0.1px,0.1py]
+    #     - ref: mirror_trackpad_socket
+    #       shift: [0.85px,0]
+    #     - ref: mirror_thumbs_space_cluster
+    #       shift: [0,-0.1py]
+    #     - ref: mirror_thumbs_nav_cluster
+    #       shift: [0,-0.2py]
+    #     - ref: mirror_matrix_index_mod
+    #       shift: [0,-0.1py]
+    #     - ref: mirror_matrix_middle_mod
+    #       shift: [0,-0.1py]
+    #     - ref: mirror_matrix_ring_bottom
+    #     - ref: mirror_matrix_outer_bottom
+    #       shift: [-0.1px,-0.1py]
+
+  board:
+    - what: polygon
+      operation: stack
+      fillet: 4
+      points: 
+        - ref: matrix_outer_num
+          shift: [-0.5px,0.5py]
+        - ref: matrix_pinky_num
+          shift: [-0.5px,0.5py]
+        - ref: matrix_ring_num
+          shift: [-0.5px,0.5py]
+        - ref: matrix_middle_num
+          shift: [-0.5px,0.5py]
+        - ref: matrix_middle_num
+          shift: [0.5px,0.5py]
+        - ref: matrix_index_num
+          shift: [0.5px,0.5py]
+        - ref: matrix_inner_num
+          shift: [0.5px,0.5py]
+        - ref: mcu
+          shift: [0.5px,0.5py]
+        - ref: power_sw
+          shift: [0.5px,0.5py]
+        - ref: power_sw
+          shift: [0.5px,-0.5py]
+        - ref: thumbs_space_cluster
+          shift: [0.75px,-0.55py]
+        - ref: thumbs_space_cluster
+          shift: [-0.75px,-0.55py]
+        - ref: thumbs_nav_cluster
+          shift: [0,-0.5py]
+        - ref: thumbs_layer_cluster
+          shift: [0, -0.5py]
+        - ref: matrix_index_mod
+          shift: [-0.5px,-0.5py]
+        - ref: matrix_middle_mod
+          shift: [-0.5px,-0.5py]
+        - ref: matrix_ring_bottom
+          shift: [0,-1.2py]
+        - ref: matrix_outer_bottom
+          shift: [0.5px,-0.55py]
+        - ref: matrix_outer_bottom
+          shift: [-0.55px,-0.55py]
+    - what: polygon
+      operation: stack
+      fillet: 4
+      points: 
+        - ref: mirror_right_encoder
+          shift: [-0.5px,0.5py]
+        - ref: mirror_matrix_pinky_num
+          shift: [-0.5px,0.5py]
+        - ref: mirror_matrix_ring_num
+          shift: [-0.5px,0.5py]
+        - ref: mirror_matrix_middle_num
+          shift: [-0.5px,0.5py]
+        - ref: mirror_matrix_middle_num
+          shift: [0.5px,0.5py]
+        - ref: mirror_matrix_index_num
+          shift: [0.5px,0.5py]
+        - ref: mirror_matrix_inner_num
+          shift: [0.5px,0.5py]
+        - ref: mirror_mcu
+          shift: [0.5px,0.5py]
+        - ref: mirror_power_sw
+          shift: [0.5px,0.5py]
+        - ref: mirror_power_sw
+          shift: [0.5px,-0.5py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.75px,-0.55py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [-0.75px,-0.55py]
+        - ref: mirror_thumbs_nav_cluster
+          shift: [0,-0.5py]
+        - ref: mirror_thumbs_layer_cluster
+          shift: [0, -0.5py]
+        - ref: mirror_matrix_index_mod
+          shift: [-0.5px,-0.5py]
+        - ref: mirror_matrix_middle_mod
+          shift: [-0.5px,-0.5py]
+        - ref: mirror_matrix_ring_bottom
+          shift: [0,-1.2py]
+        - ref: mirror_matrix_outer_bottom
+          shift: [0.5px,-0.55py]
+        - ref: mirror_matrix_outer_bottom
+          shift: [-0.55px,-0.55py]
+
+  combo:
+    - name: board
+    - operation: subtract
+      name: keys
+
+# pcbs:
+#   left:
+#     outlines:
+#       main:
+#         outline: board
