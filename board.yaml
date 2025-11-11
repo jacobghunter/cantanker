@@ -9,36 +9,53 @@ points:
     distance: 8kx
   zones:
     matrix:
+      anchor: {shift: [40, -150]}
       key:
         padding: 1ky
         spread: 1kx
       columns:
         outer:
           rows.mod.skip: true
-          rows.num:
-            asym: source
+          rows.num.asym: source
+          key:
+            nets: {from: P10}
+            tags: [switch, key]
         pinky:
           key:
             stagger: 6
             splay: -5
+            nets: {from: P19}
+            tags: [switch, key]
           rows.mod.skip: true
         ring:
-          key.splay: -3
-          key.stagger: 7
+          key:
+            splay: -3
+            stagger: 7
+            nets: {from: P9}
+            tags: [switch, key]
           rows.mod.skip: true
         middle:
-          key.stagger: 2.5
+          key:
+            stagger: 2.5
+            nets: {from: P0}
+            tags: [switch, key]
         index: 
-          key.stagger: -2.5
+          key:
+            stagger: -2.5
+            nets: {from: P14}
+            tags: [switch, key] 
         inner:
           rows.mod.skip: true
-          key.stagger: -2.5
+          key:
+            stagger: -2.5
+            nets: {from: P15}
+            tags: [switch, key] 
       rows:
-        mod:
-        bottom:
-        home:
-        top:
-        num:
+        mod: {nets: {to: P8}}
+        bottom: {nets: {to: P7}}
+        home: {nets: {to: P6}}
+        top: {nets: {to: P5}}
+        num: {nets: {to: P4}}
     thumbs:
       key:
         padding: 1ky
@@ -48,142 +65,133 @@ points:
           key:
             splay: -15
             shift: [0, -2]
+            nets: {from: P16}
+            tags: [switch, key]
         nav:
           key:
             splay: -35
             shift: [7.8, -4.8]
+            nets: {from: P1}
+            tags: [switch, key] 
         space:
           key:
             width: 1.5kx
             splay: 65
             shift: [0,-14]
-        
+            nets: {from: P18}
+            tags: [switch, key]
       anchor:
         ref: matrix_inner_mod
         shift: [2, -2]
       rows:
-        cluster:
+        cluster: {nets: {to: P8}}
 
-    # for pinky num key encoder
     right_encoder:
-      anchor:
-        ref: matrix_outer_num
+      anchor: {ref: matrix_outer_num}
       key:
         asym: clone
         padding: 1ky
         spread: 1kx
         footprint: Rotary
+        rotate: 90
+        nets: {a: P20, b: P101, from: P21, to: GND}
+        tags: [encoder, key] 
 
-    # for left encoder
     left_encoder:
-      anchor:
-        ref: matrix_inner_bottom
+      anchor: {ref: matrix_inner_bottom}
       key:
         asym: source
         shift: [20, 5]
         padding: 1ky
         spread: 1kx
         footprint: Rotary
+        nets: {a: P20, b: P101, from: P21, to: GND}
+        tags: [encoder, key]
 
     mcu:
-      anchor:
-        ref: matrix_inner_num
-        shift: [20, 0]
+      anchor: {ref: matrix_inner_num, shift: [20, 0]}
       key:
+        shift: [0, -4]
         footprint: nice!nano_v2
+        tags: [mcu]
       
-    power_sw:
-      anchor:
-        ref: mcu
-        shift: [18, 0]
+    left_power_sw:
+      anchor: {ref: mcu, shift: [7.2, -58]}
       key:
+        asym: source
         footprint: Power_Switch_MSK12C02
+        tags: [power_l] 
     
-    trackpad_socket:
-      anchor:
-        ref: matrix_inner_bottom
-        shift: [20, 10]
+    right_power_sw:
+      anchor: {ref: mcu, shift: [7.2, -58]}
       key:
         asym: clone
-        footprint: PinSocket_1x05_P2.54mm_Vertical
+        rotate: 180
+        footprint: Power_Switch_MSK12C02
+        tags: [power_r] 
+    
+    trackpad_socket:
+      anchor: {ref: matrix_inner_bottom, shift: [20, 13]}
+      key:
+        asym: clone
+        footprint: nice!nano_v2
+        nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102}
+        tags: [trackpad, key] 
 
 outlines:
-  raw: 
+  switch_cutouts:
     - what: rectangle
-      where: true
-      size: [px, py]
-      fillet: 3
-  keys:
+      where: "/switch/"
+      size: [13.8, 13.8]
+
+  _encoder_cutouts:
+    - what: circle
+      where: /encoder/
+      radius: 8
+
+  _trackpad_cutout:
     - what: rectangle
-      where: true
-      size: [kx-0.5,ky-0.5]
-  
-  # hull:
-    # - what: hull
-    #   operation: stack
-    #   fillet: 2
-    #   points: 
-    #     - ref: matrix_outer_num
-    #       shift: [-0.1px,0.1py]
-    #     - ref: matrix_pinky_num
-    #       shift: [0,0.1py]
-    #     - ref: matrix_ring_num
-    #       shift: [0,0.1py]
-    #     - ref: matrix_middle_num
-    #       shift: [0,0.1py]
-    #     - ref: matrix_index_num
-    #       shift: [0,0.1py]  
-    #     - ref: matrix_inner_num
-    #       shift: [0,0.1py]
-    #     - ref: mcu
-    #     - ref: power_sw
-    #       shift: [0.1px,0.1py]
-    #     - ref: left_encoder
-    #       shift: [0.85px,0]
-    #     - ref: thumbs_space_cluster
-    #       shift: [0,-0.1py]
-    #     - ref: thumbs_nav_cluster
-    #       shift: [0.5px,-0.1py]
-    #     - ref: matrix_index_mod
-    #       shift: [0,-0.1py]
-    #     - ref: matrix_middle_mod
-    #       shift: [0,-0.1py]
-    #     - ref: matrix_ring_bottom
-    #     - ref: matrix_outer_bottom
-    #       shift: [-0.1px,-0.1py]
-    # - what: hull
-    #   operation: stack
-    #   fillet: 2
-    #   concavity: 65
-    #   points: 
-    #     - ref: mirror_right_encoder
-    #       shift: [-0.1px,0.1py]
-    #     - ref: mirror_matrix_pinky_num
-    #       shift: [0,0.1py]
-    #     - ref: mirror_matrix_ring_num
-    #       shift: [0,0.1py]
-    #     - ref: mirror_matrix_middle_num
-    #       shift: [0,0.1py]
-    #     - ref: mirror_matrix_index_num
-    #       shift: [0,0.1py]  
-    #     - ref: mirror_matrix_inner_num
-    #       shift: [0,0.1py]
-    #     - ref: mirror_mcu
-    #     - ref: mirror_power_sw
-    #       shift: [0.1px,0.1py]
-    #     - ref: mirror_trackpad_socket
-    #       shift: [0.85px,0]
-    #     - ref: mirror_thumbs_space_cluster
-    #       shift: [0,-0.1py]
-    #     - ref: mirror_thumbs_nav_cluster
-    #       shift: [0,-0.2py]
-    #     - ref: mirror_matrix_index_mod
-    #       shift: [0,-0.1py]
-    #     - ref: mirror_matrix_middle_mod
-    #       shift: [0,-0.1py]
-    #     - ref: mirror_matrix_ring_bottom
-    #     - ref: mirror_matrix_outer_bottom
-    #       shift: [-0.1px,-0.1py]
+      where: /trackpad/
+      size: [43.2, 40.2]
+      fillet: 2
+      adjust:
+        shift: [10, 0]
+
+  hull:
+    - what: hull
+      concavity: 60
+      fillet: 4
+      points: 
+        - ref: matrix_outer_num
+        - ref: matrix_pinky_num
+        - ref: matrix_ring_num
+        - ref: matrix_middle_num
+        - ref: matrix_index_num
+        - ref: mcu
+        - ref: thumbs_space_cluster
+        - ref: thumbs_nav_cluster
+        - ref: thumbs_layer_cluster
+        - ref: matrix_index_mod
+        - ref: matrix_middle_mod
+        - ref: matrix_ring_bottom
+        - ref: matrix_outer_bottom
+    - what: hull
+      concavity: 60
+      fillet: 4
+      points: 
+        - ref: mirror_right_encoder
+        - ref: mirror_matrix_pinky_num
+        - ref: mirror_matrix_ring_num
+        - ref: mirror_matrix_middle_num
+        - ref: mirror_matrix_index_num
+        - ref: mirror_mcu
+        - ref: mirror_thumbs_space_cluster
+        - ref: mirror_thumbs_nav_cluster
+        - ref: mirror_thumbs_layer_cluster
+        - ref: mirror_matrix_index_mod
+        - ref: mirror_matrix_middle_mod
+        - ref: mirror_matrix_ring_bottom
+        - ref: mirror_matrix_outer_bottom
 
   board:
     - what: polygon
@@ -202,14 +210,14 @@ outlines:
           shift: [0.5px,0.5py]
         - ref: matrix_index_num
           shift: [0.5px,0.5py]
-        - ref: matrix_inner_num
-          shift: [0.5px,0.5py]
         - ref: mcu
-          shift: [0.5px,0.5py]
-        - ref: power_sw
-          shift: [0.5px,0.5py]
-        - ref: power_sw
-          shift: [0.5px,-0.5py]
+          shift: [-0.5px,0.8py]
+        - ref: mcu
+          shift: [0.4px,0.8py]
+        - ref: left_power_sw
+          shift: [0.08px,-0.2py]
+        - ref: thumbs_space_cluster
+          shift: [0.75px,0.55py]
         - ref: thumbs_space_cluster
           shift: [0.75px,-0.55py]
         - ref: thumbs_space_cluster
@@ -233,7 +241,7 @@ outlines:
       fillet: 4
       points: 
         - ref: mirror_right_encoder
-          shift: [-0.5px,0.5py]
+          shift: [0.5px,0.5py]
         - ref: mirror_matrix_pinky_num
           shift: [-0.5px,0.5py]
         - ref: mirror_matrix_ring_num
@@ -244,14 +252,14 @@ outlines:
           shift: [0.5px,0.5py]
         - ref: mirror_matrix_index_num
           shift: [0.5px,0.5py]
-        - ref: mirror_matrix_inner_num
-          shift: [0.5px,0.5py]
         - ref: mirror_mcu
-          shift: [0.5px,0.5py]
-        - ref: mirror_power_sw
-          shift: [0.5px,0.5py]
-        - ref: mirror_power_sw
-          shift: [0.5px,-0.5py]
+          shift: [-0.5px,0.8py]
+        - ref: mirror_mcu
+          shift: [0.4px,0.8py]
+        - ref: mirror_right_power_sw
+          shift: [-0.08px,0.2py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.75px,0.55py]
         - ref: mirror_thumbs_space_cluster
           shift: [0.75px,-0.55py]
         - ref: mirror_thumbs_space_cluster
@@ -271,13 +279,94 @@ outlines:
         - ref: mirror_matrix_outer_bottom
           shift: [-0.55px,-0.55py]
 
-  combo:
-    - name: board
-    - operation: subtract
-      name: keys
+  _mcu:
+    - what: rectangle
+      where: /mcu/
+      size: [17.78,33]
+      fillet: 1
+    - what: rectangle
+      where: /mcu/
+      size: [8.94,7.35]
+      fillet: 0.1
+      operation: stack
+      adjust:
+        shift: [0,33/2-7.35/2+0.7]
+  
+  _power_switch:
+    - what: rectangle
+      where: /power/
+      size: [2, 6]
 
-# pcbs:
-#   left:
-#     outlines:
-#       main:
-#         outline: board
+  default:
+    - name: board
+    - name: switch_cutouts
+      operation: subtract
+    - name: _encoder_cutouts
+      operation: subtract
+    - name: _trackpad_cutout
+      operation: subtract
+    - name: _mcu
+      operation: subtract
+    - name: _power_switch
+      operation: subtract
+
+pcbs:
+  board:
+    template: kicad8
+    outlines: 
+      main.outline: board
+    footprints:
+      mcu:
+        what: ceoloide/mcu_supermini_nrf52840
+        where: /mcu/ 
+        params:
+          VCC: "{{nets.VCC}}"
+          GND: "{{nets.GND}}"
+          
+      power_switch_left:
+        what: ceoloide/power_switch_smd_side
+        where: /power_l/
+        params:
+          reversible: true
+          side: B
+      
+      power_switch_right:
+        what: ceoloide/power_switch_smd_side
+        where: /power_r/
+        params:
+          reversible: true
+          side: B
+        
+      encoders:
+        what: ceoloide/rotary_encoder_ec11_ec12
+        where: /encoder/
+
+      switches:
+        what: ceoloide/switch_choc_v1_v2
+        where: /switch/
+        params:
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{row_net}}"
+
+      # trackpad:
+      #   what: infused-kim/pads
+      #   where: /trackpad/
+      #   params:
+      #     side: F
+      #     pads: 5
+      #     net_1: "{{nets.vcc}}"
+      #     net_2: "{{nets.gnd}}"
+      #     net_3: "{{nets.sda}}"
+      #     net_4: "{{nets.scl}}"
+      #     net_5: "{{nets.rdy}}"
+
+      trackpad:
+        what: ceoloide/mcu_supermini_nrf52840
+        where: /trackpad/
+        params:
+          VCC: "{{nets.vcc}}"
+          GND: "{{nets.gnd}}"
+          P2: "{{nets.sda}}"
+          P3: "{{nets.scl}}"
+          P102: "{{nets.rdy}}"
