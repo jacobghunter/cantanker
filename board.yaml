@@ -63,7 +63,7 @@ points:
       columns:
         layer:
           key:
-            splay: -15
+            splay: -20
             shift: [0, -2]
             nets: {from: P16}
             tags: [switch, key]
@@ -116,14 +116,14 @@ points:
         tags: [mcu]
       
     left_power_sw:
-      anchor: {ref: mcu, shift: [7.2, -58]}
+      anchor: {ref: mcu, shift: [10, -58]}
       key:
         asym: source
         footprint: Power_Switch_MSK12C02
         tags: [power_l] 
     
     right_power_sw:
-      anchor: {ref: mcu, shift: [7.2, -58]}
+      anchor: {ref: mcu, shift: [10, -58]}
       key:
         asym: clone
         rotate: 180
@@ -196,7 +196,7 @@ outlines:
   board:
     - what: polygon
       operation: stack
-      fillet: 4
+      fillet: 2
       points: 
         - ref: matrix_outer_num
           shift: [-0.5px,0.5py]
@@ -213,7 +213,7 @@ outlines:
         - ref: mcu
           shift: [-0.5px,0.8py]
         - ref: mcu
-          shift: [0.4px,0.8py]
+          shift: [0.5px,0.8py]
         - ref: left_power_sw
           shift: [0.08px,-0.2py]
         - ref: thumbs_space_cluster
@@ -255,7 +255,7 @@ outlines:
         - ref: mirror_mcu
           shift: [-0.5px,0.8py]
         - ref: mirror_mcu
-          shift: [0.4px,0.8py]
+          shift: [0.5px,0.8py]
         - ref: mirror_right_power_sw
           shift: [-0.08px,0.2py]
         - ref: mirror_thumbs_space_cluster
