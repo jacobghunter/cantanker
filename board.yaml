@@ -6,7 +6,7 @@ units:
 points:
   mirror: &mirror
     ref: matrix_inner_num
-    distance: 8kx
+    distance: 6kx
   zones:
     matrix:
       anchor: {shift: [40, -150]}
@@ -165,10 +165,10 @@ outlines:
   _trackpad_cutout:
     - what: rectangle
       where: /trackpad/
-      size: [43.2, 40.2]
+      size: [40.2, 43.2]
       fillet: 2
       adjust:
-        shift: [10, 0]
+        shift: [11, -6]
 
   hull:
     - what: hull
@@ -209,7 +209,7 @@ outlines:
   _board:
     - what: polygon
       operation: stack
-      fillet: 2
+      fillet: 4
       points: 
         - ref: matrix_outer_num
           shift: [-0.5px,0.5py]
@@ -334,7 +334,7 @@ outlines:
     
 
 pcbs:
-  _board:
+  board:
     template: kicad8
     outlines: 
       main.outline: _board
