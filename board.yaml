@@ -44,6 +44,7 @@ points:
             stagger: -2.5
             nets: {from: P14}
             tags: [switch, key] 
+          rows.mod.skip: true
         inner:
           rows.mod.skip: true
           key:
@@ -63,10 +64,11 @@ points:
       columns:
         layer:
           key:
-            splay: -20
-            shift: [0, -2]
+            splay: -30
+            shift: [0, -6]
             nets: {from: P16}
             tags: [switch, key]
+        # CONSIDER ADDING THE NAV KEY BACK
         # nav:
         #   key:
         #     splay: -35
@@ -76,15 +78,25 @@ points:
         space:
           key:
             width: 1.5kx
-            splay: 50
-            shift: [-0.8,-10]
+            splay: 60
+            shift: [-2,-8]
             nets: {from: P18}
-            tags: [switch, key]
+            tags: [switch, key, key_5u]
       anchor:
         ref: matrix_inner_mod
         shift: [2, -2]
       rows:
         cluster: {nets: {to: P8}}
+
+    matrix_index_mod_key:
+      anchor:
+        ref: matrix_index_bottom
+        shift: [0, -1kx]
+      key:
+        rotate: -20
+        shift: [0, -0.5]
+        nets: {from: P14, to: P8}
+        tags: [switch, key]
 
     right_encoder:
       anchor: {ref: matrix_outer_num}
@@ -139,8 +151,9 @@ points:
         tags: [trackpad, key] 
 
 outlines:
-  switch_cutouts:
+  _switch_cutouts:
     - what: rectangle
+      fillet: 2
       where: "/switch/"
       size: [13.8, 13.8]
 
@@ -171,7 +184,7 @@ outlines:
         - ref: thumbs_space_cluster
         # - ref: thumbs_nav_cluster
         - ref: thumbs_layer_cluster
-        - ref: matrix_index_mod
+        - ref: matrix_index_mod_key
         - ref: matrix_middle_mod
         - ref: matrix_ring_bottom
         - ref: matrix_outer_bottom
@@ -188,12 +201,12 @@ outlines:
         - ref: mirror_thumbs_space_cluster
         # - ref: mirror_thumbs_nav_cluster
         - ref: mirror_thumbs_layer_cluster
-        - ref: mirror_matrix_index_mod
+        - ref: mirror_matrix_index_mod_key
         - ref: mirror_matrix_middle_mod
         - ref: mirror_matrix_ring_bottom
         - ref: mirror_matrix_outer_bottom
 
-  board:
+  _board:
     - what: polygon
       operation: stack
       fillet: 2
@@ -216,8 +229,8 @@ outlines:
           shift: [0.5px,0.8py]
         - ref: left_power_sw
           shift: [0.08px,-0.2py]
-        - ref: thumbs_space_cluster
-          shift: [0.75px,0.55py]
+        # - ref: thumbs_space_cluster
+        #   shift: [0.75px,0.55py]
         - ref: thumbs_space_cluster
           shift: [0.75px,-0.55py]
         - ref: thumbs_space_cluster
@@ -226,7 +239,7 @@ outlines:
         #   shift: [0,-0.5py]
         - ref: thumbs_layer_cluster
           shift: [0, -0.5py]
-        - ref: matrix_index_mod
+        - ref: matrix_index_mod_key
           shift: [-0.5px,-0.5py]
         - ref: matrix_middle_mod
           shift: [-0.5px,-0.5py]
@@ -258,8 +271,8 @@ outlines:
           shift: [0.5px,0.8py]
         - ref: mirror_right_power_sw
           shift: [-0.08px,0.2py]
-        - ref: mirror_thumbs_space_cluster
-          shift: [0.75px,0.55py]
+        # - ref: mirror_thumbs_space_cluster
+        #   shift: [0.75px,0.55py]
         - ref: mirror_thumbs_space_cluster
           shift: [0.75px,-0.55py]
         - ref: mirror_thumbs_space_cluster
@@ -268,7 +281,7 @@ outlines:
         #   shift: [0,-0.5py]
         - ref: mirror_thumbs_layer_cluster
           shift: [0, -0.5py]
-        - ref: mirror_matrix_index_mod
+        - ref: mirror_matrix_index_mod_key
           shift: [-0.5px,-0.5py]
         - ref: mirror_matrix_middle_mod
           shift: [-0.5px,-0.5py]
@@ -297,9 +310,16 @@ outlines:
       where: /power/
       size: [2, 6]
 
+  _thumb_keys:
+    - what: rectangle
+      where: /key_5u/
+      size: [18*1.5,18]
+      fillet: 1.5
+      operation: stack
+
   default:
-    - name: board
-    - name: switch_cutouts
+    - name: _board
+    - name: _switch_cutouts
       operation: subtract
     - name: _encoder_cutouts
       operation: subtract
@@ -309,12 +329,15 @@ outlines:
       operation: subtract
     - name: _power_switch
       operation: subtract
+    - name: _thumb_keys
+      operation: subtract
+    
 
 pcbs:
-  board:
+  _board:
     template: kicad8
     outlines: 
-      main.outline: board
+      main.outline: _board
     footprints:
       mcu:
         what: ceoloide/mcu_supermini_nrf52840
