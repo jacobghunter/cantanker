@@ -67,17 +67,17 @@ points:
             shift: [0, -2]
             nets: {from: P16}
             tags: [switch, key]
-        nav:
-          key:
-            splay: -35
-            shift: [7.8, -4.8]
-            nets: {from: P1}
-            tags: [switch, key] 
+        # nav:
+        #   key:
+        #     splay: -35
+        #     shift: [7.8, -4.8]
+        #     nets: {from: P1}
+        #     tags: [switch, key] 
         space:
           key:
             width: 1.5kx
-            splay: 65
-            shift: [0,-14]
+            splay: 50
+            shift: [-0.8,-10]
             nets: {from: P18}
             tags: [switch, key]
       anchor:
@@ -169,7 +169,7 @@ outlines:
         - ref: matrix_index_num
         - ref: mcu
         - ref: thumbs_space_cluster
-        - ref: thumbs_nav_cluster
+        # - ref: thumbs_nav_cluster
         - ref: thumbs_layer_cluster
         - ref: matrix_index_mod
         - ref: matrix_middle_mod
@@ -186,7 +186,7 @@ outlines:
         - ref: mirror_matrix_index_num
         - ref: mirror_mcu
         - ref: mirror_thumbs_space_cluster
-        - ref: mirror_thumbs_nav_cluster
+        # - ref: mirror_thumbs_nav_cluster
         - ref: mirror_thumbs_layer_cluster
         - ref: mirror_matrix_index_mod
         - ref: mirror_matrix_middle_mod
@@ -222,8 +222,8 @@ outlines:
           shift: [0.75px,-0.55py]
         - ref: thumbs_space_cluster
           shift: [-0.75px,-0.55py]
-        - ref: thumbs_nav_cluster
-          shift: [0,-0.5py]
+        # - ref: thumbs_nav_cluster
+        #   shift: [0,-0.5py]
         - ref: thumbs_layer_cluster
           shift: [0, -0.5py]
         - ref: matrix_index_mod
@@ -264,8 +264,8 @@ outlines:
           shift: [0.75px,-0.55py]
         - ref: mirror_thumbs_space_cluster
           shift: [-0.75px,-0.55py]
-        - ref: mirror_thumbs_nav_cluster
-          shift: [0,-0.5py]
+        # - ref: mirror_thumbs_nav_cluster
+        #   shift: [0,-0.5py]
         - ref: mirror_thumbs_layer_cluster
           shift: [0, -0.5py]
         - ref: mirror_matrix_index_mod
