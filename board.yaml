@@ -1,3 +1,5 @@
+# This is intended to be a split wireless corne-like keyboard with an Azoteq TPS43 mounted on the right
+
 units:
   kx: cx
   ky: cy
@@ -13,6 +15,10 @@ points:
       key:
         padding: 1ky
         spread: 1kx
+        draw:
+          - what: rectangle
+            size: 18
+            fillet: 3
       columns:
         outer:
           rows.mod.skip: true
@@ -39,6 +45,7 @@ points:
             stagger: 2.5
             nets: {from: P0}
             tags: [switch, key]
+          rows.mod.skip: true
         index: 
           key:
             stagger: -2.5
@@ -64,22 +71,15 @@ points:
       columns:
         layer:
           key:
-            splay: -30
-            shift: [0, -6]
+            splay: -35
+            shift: [0.35kx, -0.5ky]
             nets: {from: P16}
             tags: [switch, key]
-        # CONSIDER ADDING THE NAV KEY BACK
-        # nav:
-        #   key:
-        #     splay: -35
-        #     shift: [7.8, -4.8]
-        #     nets: {from: P1}
-        #     tags: [switch, key] 
         space:
           key:
             width: 1.5kx
-            splay: 60
-            shift: [-2,-8]
+            splay: 65
+            shift: [-0.2kx,-0.9ky]
             nets: {from: P18}
             tags: [switch, key, key_5u]
       anchor:
@@ -87,11 +87,21 @@ points:
         shift: [2, -2]
       rows:
         cluster: {nets: {to: P8}}
+    
+    matrix_middle_mod_key:
+      anchor:
+        ref: matrix_middle_bottom
+        shift: [-0.02kx, -1.16ky]
+      key:
+        rotate: -5
+        shift: [0, 0]
+        nets: {from: P0, to: P8}
+        tags: [switch, key]
 
     matrix_index_mod_key:
       anchor:
         ref: matrix_index_bottom
-        shift: [0, -1kx]
+        shift: [0.1kx, -1.2kx]
       key:
         rotate: -20
         shift: [0, -0.5]
@@ -105,7 +115,7 @@ points:
         padding: 1ky
         spread: 1kx
         footprint: Rotary
-        rotate: 90
+        shift: [0, 0.1kx]
         nets: {a: P20, b: P101, from: P21, to: GND}
         tags: [encoder, key] 
 
@@ -126,36 +136,91 @@ points:
         shift: [0, -4]
         footprint: nice!nano_v2
         tags: [mcu]
+    
+    display:
+      key:
+        tags: [oled]
+        asym: left
+        height: 36
+        width: 14
+        nets: {gnd: GND, vcc: VCC, mosi: P1, sck: P2, cs: P3}
+      anchor:
+        - ref: mcu
+          shift: [0,-3.5]
+
+    # Is it okay to put these under the mcu?
+    battery_connector:
+      anchor:
+        - ref: mcu
+          shift: [0, 10]
+      key: 
+        tags: [jst]
       
     left_power_sw:
-      anchor: {ref: mcu, shift: [10, -58]}
+      anchor: {ref: mcu, shift: [10, -68]}
       key:
+        rotate: 20
         asym: source
         footprint: Power_Switch_MSK12C02
         tags: [power_l] 
     
     right_power_sw:
-      anchor: {ref: mcu, shift: [10, -58]}
+      anchor: {ref: mcu, shift: [10, -68]}
       key:
         asym: clone
-        rotate: 180
+        rotate: 200
         footprint: Power_Switch_MSK12C02
         tags: [power_r] 
     
+    # Going to use the Azoteq TPS43 with the kit from https://holykeebs.com/products/touchpad-module
     trackpad_socket:
-      anchor: {ref: matrix_inner_bottom, shift: [20, 13]}
+      anchor: {ref: matrix_inner_bottom, shift: [20, 6]}
       key:
         asym: clone
         footprint: nice!nano_v2
         nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102}
         tags: [trackpad, key] 
 
+    mounting_hole_top_left:
+      anchor: 
+        ref: matrix_pinky_num
+      key:
+        tags: [hole]
+        shift: [-0.65kx, -0.5ky]
+    
+    mounting_hole_bottom_left:
+      anchor: 
+        ref: matrix_ring_mod
+      key:
+        tags: [hole]
+        shift: [0kx, 0.25ky]
+
+    mounting_hole_top_right:
+      anchor: 
+        ref: mcu
+      key:
+        tags: [hole]
+        shift: [-0.525kx, -1.25ky]
+
+    mounting_hole_bottom_right:
+      anchor: 
+        ref: matrix_inner_bottom
+      key:
+        tags: [hole]
+        shift: [0kx, -0.8ky]
+
 outlines:
-  _switch_cutouts:
+  switch_cutouts:
     - what: rectangle
       fillet: 2
       where: "/switch/"
-      size: [13.8, 13.8]
+      size: [13.8, 13.8] 
+  
+  _key_cutouts:
+    - what: rectangle
+      fillet: 2
+      where: "/switch/"
+      size: [kx-0.5, ky-0.5]
 
   _encoder_cutouts:
     - what: circle
@@ -169,42 +234,6 @@ outlines:
       fillet: 2
       adjust:
         shift: [11, -6]
-
-  hull:
-    - what: hull
-      concavity: 60
-      fillet: 4
-      points: 
-        - ref: matrix_outer_num
-        - ref: matrix_pinky_num
-        - ref: matrix_ring_num
-        - ref: matrix_middle_num
-        - ref: matrix_index_num
-        - ref: mcu
-        - ref: thumbs_space_cluster
-        # - ref: thumbs_nav_cluster
-        - ref: thumbs_layer_cluster
-        - ref: matrix_index_mod_key
-        - ref: matrix_middle_mod
-        - ref: matrix_ring_bottom
-        - ref: matrix_outer_bottom
-    - what: hull
-      concavity: 60
-      fillet: 4
-      points: 
-        - ref: mirror_right_encoder
-        - ref: mirror_matrix_pinky_num
-        - ref: mirror_matrix_ring_num
-        - ref: mirror_matrix_middle_num
-        - ref: mirror_matrix_index_num
-        - ref: mirror_mcu
-        - ref: mirror_thumbs_space_cluster
-        # - ref: mirror_thumbs_nav_cluster
-        - ref: mirror_thumbs_layer_cluster
-        - ref: mirror_matrix_index_mod_key
-        - ref: mirror_matrix_middle_mod
-        - ref: mirror_matrix_ring_bottom
-        - ref: mirror_matrix_outer_bottom
 
   _board:
     - what: polygon
@@ -228,21 +257,15 @@ outlines:
         - ref: mcu
           shift: [0.5px,0.8py]
         - ref: left_power_sw
-          shift: [0.08px,-0.2py]
-        # - ref: thumbs_space_cluster
-        #   shift: [0.75px,0.55py]
+          shift: [0.08px,0.2py]
         - ref: thumbs_space_cluster
           shift: [0.75px,-0.55py]
         - ref: thumbs_space_cluster
           shift: [-0.75px,-0.55py]
-        # - ref: thumbs_nav_cluster
-        #   shift: [0,-0.5py]
         - ref: thumbs_layer_cluster
           shift: [0, -0.5py]
         - ref: matrix_index_mod_key
-          shift: [-0.5px,-0.5py]
-        - ref: matrix_middle_mod
-          shift: [-0.5px,-0.5py]
+          shift: [-0.5px,-0.55py]
         - ref: matrix_ring_bottom
           shift: [0,-1.2py]
         - ref: matrix_outer_bottom
@@ -254,7 +277,7 @@ outlines:
       fillet: 4
       points: 
         - ref: mirror_right_encoder
-          shift: [0.5px,0.5py]
+          shift: [-0.5px,0.4py]
         - ref: mirror_matrix_pinky_num
           shift: [-0.5px,0.5py]
         - ref: mirror_matrix_ring_num
@@ -270,21 +293,15 @@ outlines:
         - ref: mirror_mcu
           shift: [0.5px,0.8py]
         - ref: mirror_right_power_sw
-          shift: [-0.08px,0.2py]
-        # - ref: mirror_thumbs_space_cluster
-        #   shift: [0.75px,0.55py]
+          shift: [-0.08px,-0.2py]
         - ref: mirror_thumbs_space_cluster
           shift: [0.75px,-0.55py]
         - ref: mirror_thumbs_space_cluster
           shift: [-0.75px,-0.55py]
-        # - ref: mirror_thumbs_nav_cluster
-        #   shift: [0,-0.5py]
         - ref: mirror_thumbs_layer_cluster
           shift: [0, -0.5py]
         - ref: mirror_matrix_index_mod_key
-          shift: [-0.5px,-0.5py]
-        - ref: mirror_matrix_middle_mod
-          shift: [-0.5px,-0.5py]
+          shift: [-0.5px,-0.55py]
         - ref: mirror_matrix_ring_bottom
           shift: [0,-1.2py]
         - ref: mirror_matrix_outer_bottom
@@ -304,6 +321,25 @@ outlines:
       operation: stack
       adjust:
         shift: [0,33/2-7.35/2+0.7]
+
+  _display:
+    - what: rectangle
+      where: /display/
+      size: [14,36]
+      fillet: 0.5
+    - what: rectangle
+      where: /display/
+      size: [12.82,2.66]
+      operation: stack
+      fillet: 0.1
+      adjust:
+        shift: [0,-16.7]
+    - what: rectangle
+      where: /display/
+      size: [10.8,24.6]
+      operation: stack
+      adjust:
+        shift: [0,-0.75]
   
   _power_switch:
     - what: rectangle
@@ -317,17 +353,29 @@ outlines:
       fillet: 1.5
       operation: stack
 
+  _mounting_holes:
+    - what: circle
+      where: /hole/
+      operation: stack
+      radius: 1.1
+
   default:
     - name: _board
-    - name: _switch_cutouts
+    - name: _key_cutouts
       operation: subtract
     - name: _encoder_cutouts
       operation: subtract
     - name: _trackpad_cutout
+      operation: add
+    - name: _trackpad_cutout
       operation: subtract
     - name: _mcu
       operation: subtract
+    - name: _display
+      operation: stack
     - name: _power_switch
+      operation: subtract
+    - name: _mounting_holes
       operation: subtract
     - name: _thumb_keys
       operation: subtract
@@ -345,6 +393,23 @@ pcbs:
         params:
           VCC: "{{nets.VCC}}"
           GND: "{{nets.GND}}"
+
+      oled: 
+        what: ceoloide/display_nice_view
+        where: /oled/
+        params:
+          side: F
+          GND: "{{nets.gnd}}"
+          VCC: "{{nets.vcc}}"
+          MOSI: "{{nets.mosi}}"
+          SCK: "{{nets.sck}}"
+          CS: "{{nets.cs}}"
+
+      battery_connectors:
+        what: ceoloide/battery_connector_jst_ph_2
+        where: /jst/
+        params:
+          side: B
           
       power_switch_left:
         what: ceoloide/power_switch_smd_side
@@ -370,19 +435,16 @@ pcbs:
         params:
           hotswap: true
           from: "{{column_net}}"
-          to: "{{row_net}}"
+          to: "{{diode_net}}"
 
-      # trackpad:
-      #   what: infused-kim/pads
-      #   where: /trackpad/
-      #   params:
-      #     side: F
-      #     pads: 5
-      #     net_1: "{{nets.vcc}}"
-      #     net_2: "{{nets.gnd}}"
-      #     net_3: "{{nets.sda}}"
-      #     net_4: "{{nets.scl}}"
-      #     net_5: "{{nets.rdy}}"
+      diodes:
+        what: ceoloide/diode_tht_sod123
+        where: /switch/
+        params:
+          from: "{{diode_net}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
 
       trackpad:
         what: ceoloide/mcu_supermini_nrf52840
@@ -393,3 +455,9 @@ pcbs:
           P2: "{{nets.sda}}"
           P3: "{{nets.scl}}"
           P102: "{{nets.rdy}}"
+
+      standoffs:
+        what: ceoloide/mounting_hole_plated
+        where: /hole/
+        params:
+          drill: 2.2
