@@ -157,7 +157,7 @@ points:
         tags: [jst]
       
     left_power_sw:
-      anchor: {ref: mcu, shift: [10, -68]}
+      anchor: {ref: mcu, shift: [11, -68]}
       key:
         rotate: 20
         asym: source
@@ -165,7 +165,7 @@ points:
         tags: [power_l] 
     
     right_power_sw:
-      anchor: {ref: mcu, shift: [10, -68]}
+      anchor: {ref: mcu, shift: [11, -68]}
       key:
         asym: clone
         rotate: 200
