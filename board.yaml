@@ -25,39 +25,39 @@ points:
           rows.num.asym: source
           key:
             nets: {from: P10}
-            tags: [switch, key]
+            tags: [switch]
         pinky:
           key:
             stagger: 6
             splay: -5
             nets: {from: P19}
-            tags: [switch, key]
+            tags: [switch]
           rows.mod.skip: true
         ring:
           key:
             splay: -3
             stagger: 7
             nets: {from: P9}
-            tags: [switch, key]
+            tags: [switch]
           rows.mod.skip: true
         middle:
           key:
             stagger: 2.5
             nets: {from: P0}
-            tags: [switch, key]
+            tags: [switch]
           rows.mod.skip: true
         index: 
           key:
             stagger: -2.5
             nets: {from: P14}
-            tags: [switch, key] 
+            tags: [switch] 
           rows.mod.skip: true
         inner:
           rows.mod.skip: true
           key:
             stagger: -2.5
             nets: {from: P15}
-            tags: [switch, key] 
+            tags: [switch] 
       rows:
         mod: {nets: {to: P8}}
         bottom: {nets: {to: P7}}
@@ -74,14 +74,14 @@ points:
             splay: -35
             shift: [0.35kx, -0.5ky]
             nets: {from: P16}
-            tags: [switch, key]
+            tags: [switch]
         space:
           key:
             width: 1.5kx
             splay: 65
             shift: [-0.2kx,-0.9ky]
             nets: {from: P18}
-            tags: [switch, key, key_5u]
+            tags: [switch, key_1.5u]
       anchor:
         ref: matrix_inner_mod
         shift: [2, -2]
@@ -96,7 +96,7 @@ points:
         rotate: -5
         shift: [0, 0]
         nets: {from: P0, to: P8}
-        tags: [switch, key]
+        tags: [switch]
 
     matrix_index_mod_key:
       anchor:
@@ -106,7 +106,7 @@ points:
         rotate: -20
         shift: [0, -0.5]
         nets: {from: P14, to: P8}
-        tags: [switch, key]
+        tags: [switch]
 
     right_encoder:
       anchor: {ref: matrix_outer_num}
@@ -117,7 +117,7 @@ points:
         footprint: Rotary
         shift: [0, 0.1kx]
         nets: {a: P20, b: P101, from: P21, to: GND}
-        tags: [encoder, key] 
+        tags: [encoder] 
 
     left_encoder:
       anchor: {ref: matrix_inner_bottom}
@@ -128,7 +128,7 @@ points:
         spread: 1kx
         footprint: Rotary
         nets: {a: P20, b: P101, from: P21, to: GND}
-        tags: [encoder, key]
+        tags: [encoder]
 
     mcu:
       anchor: {ref: matrix_inner_num, shift: [20, 0]}
@@ -140,7 +140,6 @@ points:
     display:
       key:
         tags: [oled]
-        asym: left
         height: 36
         width: 14
         nets: {gnd: GND, vcc: VCC, mosi: P1, sck: P2, cs: P3}
@@ -155,6 +154,7 @@ points:
           shift: [0, 10]
       key: 
         tags: [jst]
+        nets: {pos: RAW, neg: GND}
       
     left_power_sw:
       anchor: {ref: mcu, shift: [11, -68]}
@@ -179,7 +179,7 @@ points:
         asym: clone
         footprint: nice!nano_v2
         nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102}
-        tags: [trackpad, key] 
+        tags: [trackpad, mcu] 
 
     mounting_hole_top_left:
       anchor: 
@@ -233,7 +233,7 @@ outlines:
       size: [40.2, 43.2]
       fillet: 2
       adjust:
-        shift: [11, -6]
+        shift: [11, -5]
 
   _board:
     - what: polygon
@@ -348,7 +348,7 @@ outlines:
 
   _thumb_keys:
     - what: rectangle
-      where: /key_5u/
+      where: /key_1.5u/
       size: [18*1.5,18]
       fillet: 1.5
       operation: stack
@@ -410,6 +410,8 @@ pcbs:
         where: /jst/
         params:
           side: B
+          BAT_P: "{{nets.pos}}"
+          BAT_N: "{{nets.neg}}"
           
       power_switch_left:
         what: ceoloide/power_switch_smd_side
