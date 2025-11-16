@@ -175,6 +175,7 @@ points:
         asym: source
         footprint: Power_Switch_MSK12C02
         tags: [power_l] 
+        nets: {from: RAW, to: VCC}
     
     right_power_sw:
       anchor: {ref: mcu, shift: [9.5, -68]}
@@ -183,6 +184,7 @@ points:
         rotate: 180
         footprint: Power_Switch_MSK12C02
         tags: [power_r] 
+        nets: {from: RAW, to: VCC}
     
     reset_button:
       anchor:
@@ -192,6 +194,7 @@ points:
         tags: [reset_button]
         shift: [0.35kx, 0.625ky]
         rotate: 0
+        nets: {from: RST, to: GND}
 
     # Going to use the Azoteq TPS43 with the kit from https://holykeebs.com/products/touchpad-module
     trackpad_socket:
@@ -199,7 +202,7 @@ points:
       key:
         asym: clone
         footprint: nice!nano_v2
-        nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102} # This is now correct
+        nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102}
         tags: [trackpad]
 
     mounting_hole_top_left:
@@ -251,10 +254,10 @@ outlines:
   _trackpad_cutout:
     - what: rectangle
       where: /trackpad/
-      size: [40.2, 43.2]
+      size: [43.2, 40.2]
       fillet: 2
       adjust:
-        shift: [11, -5]
+        shift: [12, -3]
 
   _board:
     - what: polygon
@@ -478,6 +481,8 @@ pcbs:
         params:
           reversible: true
           side: B
+          from: "{{nets.from}}"
+          to: "{{nets.to}}"
       
       power_switch_right:
         what: ceoloide/power_switch_smd_side
@@ -485,14 +490,24 @@ pcbs:
         params:
           reversible: true
           side: B
+          from: "{{nets.from}}"
+          to: "{{nets.to}}"
 
       reset_buttons:
         what: ceoloide/reset_switch_smd_side
         where: /reset_button/
+        params:
+          from: "{{nets.from}}"
+          to: "{{nets.to}}"
         
       encoders:
         what: ceoloide/rotary_encoder_ec11_ec12
         where: /encoder/
+        params: 
+          A: "{{nets.a}}" 
+          B: "{{nets.b}}"
+          S1: "{{nets.from}}"
+          S2: "{{nets.to}}"
 
       switches:
         what: ceoloide/switch_choc_v1_v2
@@ -502,16 +517,29 @@ pcbs:
           from: "{{column_net}}"
           to: "{{colrow}}"
 
-      diodes:
+      diodes_left:
         what: ceoloide/diode_tht_sod123
-        where: /switch/
+        where: [[/switch/, -/^mirror_.*/]]
         params:
+          side: 'B'
           reversible: true
           include_tht: true
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
           shift: [2, -5]
+
+      diodes_right:
+        what: ceoloide/diode_tht_sod123
+        where: [[/switch/, /^mirror_.*/]]
+        params:
+          side: 'B'
+          reversible: true
+          include_tht: true
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [-2, -5]
 
       trackpad:
         what: ceoloide/mcu_supermini_nrf52840
