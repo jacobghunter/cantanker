@@ -120,7 +120,7 @@ points:
         spread: 1kx
         footprint: Rotary
         shift: [0, 0.1kx]
-        nets: {a: P20, b: P101, from: P21, to: GND}
+        nets: {a: R_P20, b: R_P101, from: R_P21, to: GND}
         tags: [encoder] 
 
     left_encoder:
@@ -140,6 +140,10 @@ points:
         shift: [0, -4]
         footprint: nice!nano_v2
         tags: [mcu]
+        nets:
+          RAW: RAW
+          GND: GND
+          VCC: VCC
     
     display:
       key:
@@ -202,7 +206,7 @@ points:
       key:
         asym: clone
         footprint: nice!nano_v2
-        nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102}
+        nets: {vcc: VCC, gnd: GND, sda: TP_SDA, scl: TP_SCL, rdy: TP_RDY}
         tags: [trackpad]
 
     mounting_hole_top_left:
@@ -415,10 +419,15 @@ pcbs:
     outlines: 
       main.outline: _board
     footprints:
-      mcu:
+      mcu_left:
         what: ceoloide/mcu_supermini_nrf52840
-        where: /mcu/ 
+        # Selects ONLY the left (source) MCU
+        where: [[/mcu/, -/^mirror_.*/]] 
         params:
+          # Adds extra 3 pins
+          include_extra_pins: true
+          reverse_mount: true
+          
           # --- POWER ---
           VCC: "{{nets.VCC}}"
           GND: "{{nets.GND}}"
@@ -443,18 +452,61 @@ pcbs:
           P16: "P16"
           P18: "P18"
 
-          # --- ENCODERS ---
+          # --- ENCODERS (Left nets) ---
           P20: "P20"
           P101: "P101"
           P21: "P21"
 
-          # --- DEVICES (This now works) ---
-          # On Left (source): P1, P2, P3 connect to Display
-          # On Right (clone): P1 is unused, P2, P3 connect to Trackpad
-          P1: "P1"     
-          P2: "P2"     
-          P3: "P3"     
-          P102: "P102" # Trackpad 'rdy' (right side only)
+          # --- DEVICES ---
+          P1: "P1" 
+          P2: "P2" 
+          P3: "P3" 
+          P102: "P102"
+
+      mcu_right:
+        what: ceoloide/mcu_supermini_nrf52840
+        # Selects ONLY the right (mirror) MCU
+        where: [[/mcu/, /^mirror_.*/]]
+        params:
+          # Adds extra 3 pins
+          include_extra_pins: true
+          reverse_mount: true
+
+          # --- POWER ---
+          VCC: "{{nets.VCC}}"
+          GND: "{{nets.GND}}"
+          RAW: "{{nets.RAW}}"
+
+          # --- ROWS ---
+          P8: "P8"
+          P7: "P7"
+          P6: "P6"
+          P5: "P5"
+          P4: "P4"
+          
+          # --- COLS ---
+          P10: "P10"
+          P19: "P19"
+          P9: "P9"
+          P0: "P0"
+          P14: "P14"
+          P15: "P15"
+
+          # --- THUMB COLS ---
+          P16: "P16"
+          P18: "P18"
+
+          # --- ENCODERS (Right nets) ---
+          # Map physical pins to your NEW nets
+          P20: "R_P20"
+          P101: "R_P101"
+          P21: "R_P21"
+
+          # --- DEVICES ---
+          P1: "P1"
+          P2: "TP_SDA"
+          P3: "TP_SCL"
+          P102: "TP_RDY"
 
       oled: 
         what: ceoloide/display_nice_view
@@ -545,11 +597,31 @@ pcbs:
         what: ceoloide/mcu_supermini_nrf52840
         where: /trackpad/
         params:
+          reverse_mount: true
           VCC: "{{nets.vcc}}"
           GND: "{{nets.gnd}}"
           P2: "{{nets.sda}}"
           P3: "{{nets.scl}}"
-          P102: "{{nets.rdy}}"
+          P4: "{{nets.rdy}}"
+          # Unused pins — disable them
+          RAW: ""
+          RST: ""
+          P0: ""
+          P1: ""
+          P5: ""
+          P6: ""
+          P7: ""
+          P8: ""
+          P9: ""
+          P10: ""
+          P14: ""
+          P15: ""
+          P16: ""
+          P18: ""
+          P19: ""
+          P20: ""
+          P21: ""
+          P101: ""
 
       standoffs:
         what: ceoloide/mounting_hole_plated
