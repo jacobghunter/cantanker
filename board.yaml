@@ -165,18 +165,17 @@ points:
         nets: {pos: RAW, neg: GND}
       
     left_power_sw:
-      anchor: {ref: mcu, shift: [11, -68]}
+      anchor: {ref: mcu, shift: [9.5, -68]}
       key:
-        rotate: 20
         asym: source
         footprint: Power_Switch_MSK12C02
         tags: [power_l] 
     
     right_power_sw:
-      anchor: {ref: mcu, shift: [11, -68]}
+      anchor: {ref: mcu, shift: [9.5, -68]}
       key:
         asym: clone
-        rotate: 200
+        rotate: 180
         footprint: Power_Switch_MSK12C02
         tags: [power_r] 
     
@@ -255,7 +254,7 @@ outlines:
   _board:
     - what: polygon
       operation: stack
-      fillet: 2
+      fillet: 4
       points: 
         - ref: matrix_outer_num
           shift: [-0.5px,0.5py]
@@ -273,12 +272,14 @@ outlines:
           shift: [-0.5px,0.8py]
         - ref: mcu
           shift: [0.5px,0.8py]
-        - ref: left_power_sw
-          shift: [0.08px,0.2py]
+        # - ref: left_power_sw
+        #   shift: [0.08px,0.2py]
         - ref: thumbs_space_cluster
-          shift: [0.6px,-0.45py]
+          shift: [0.8px,0.5py]
         - ref: thumbs_space_cluster
-          shift: [-0.6px,-0.45py]
+          shift: [0.75px,-0.55py]
+        - ref: thumbs_space_cluster
+          shift: [-0.75px,-0.55py]
         - ref: thumbs_layer_cluster
           shift: [0, -0.5py]
         - ref: matrix_index_mod_key
@@ -309,8 +310,10 @@ outlines:
           shift: [-0.5px,0.8py]
         - ref: mirror_mcu
           shift: [0.5px,0.8py]
-        - ref: mirror_right_power_sw
-          shift: [-0.08px,-0.2py]
+        # - ref: mirror_right_power_sw
+        #   shift: [-0.08px,-0.2py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.8px,0.5py]
         - ref: mirror_thumbs_space_cluster
           shift: [0.75px,-0.55py]
         - ref: mirror_thumbs_space_cluster
