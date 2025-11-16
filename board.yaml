@@ -24,46 +24,47 @@ points:
           rows.mod.skip: true
           rows.num.asym: source
           key:
-            nets: {from: P10}
+            nets: {col: P10}  # <-- FIXED
             tags: [switch]
         pinky:
           key:
             stagger: 6
             splay: -5
-            nets: {from: P19}
+            nets: {col: P19}  # <-- FIXED
             tags: [switch]
           rows.mod.skip: true
         ring:
           key:
             splay: -3
             stagger: 7
-            nets: {from: P9}
+            nets: {col: P9}   # <-- FIXED
             tags: [switch]
           rows.mod.skip: true
         middle:
           key:
             stagger: 2.5
-            nets: {from: P0}
+            nets: {col: P0}   # <-- FIXED
             tags: [switch]
           rows.mod.skip: true
         index: 
           key:
             stagger: -2.5
-            nets: {from: P14}
+            nets: {col: P14}  # <-- FIXED
             tags: [switch] 
           rows.mod.skip: true
         inner:
           rows.mod.skip: true
           key:
             stagger: -2.5
-            nets: {from: P15}
+            nets: {col: P15}  # <-- FIXED
             tags: [switch] 
       rows:
-        mod: {nets: {to: P8}}
-        bottom: {nets: {to: P7}}
-        home: {nets: {to: P6}}
-        top: {nets: {to: P5}}
-        num: {nets: {to: P4}}
+        mod: {nets: {row: P8}}     # <-- FIXED
+        bottom: {nets: {row: P7}}  # <-- FIXED
+        home: {nets: {row: P6}}    # <-- FIXED
+        top: {nets: {row: P5}}     # <-- FIXED
+        num: {nets: {row: P4}}     # <-- FIXED
+    
     thumbs:
       key:
         padding: 1ky
@@ -73,21 +74,21 @@ points:
           key:
             splay: -35
             shift: [0.35kx, -0.5ky]
-            nets: {from: P16}
+            nets: {col: P16}  # <-- FIXED
             tags: [switch]
         space:
           key:
             width: 1.5kx
             splay: 65
             shift: [-0.2kx,-0.9ky]
-            nets: {from: P18}
+            nets: {col: P18}  # <-- FIXED
             tags: [switch, key_1.5u]
       anchor:
         ref: matrix_inner_mod
         shift: [2, -2]
       rows:
-        cluster: {nets: {to: P8}}
-    
+        cluster: {nets: {row: P8}} # <-- FIXED
+
     matrix_middle_mod_key:
       anchor:
         ref: matrix_middle_bottom
@@ -95,7 +96,7 @@ points:
       key:
         rotate: -5
         shift: [0, 0]
-        nets: {from: P0, to: P8}
+        nets: {col: P0, row: P8}  # <-- FIXED
         tags: [switch]
 
     matrix_index_mod_key:
@@ -105,9 +106,9 @@ points:
       key:
         rotate: -20
         shift: [0, -0.5]
-        nets: {from: P14, to: P8}
+        nets: {col: P14, row: P8} # <-- FIXED
         tags: [switch]
-
+        
     right_encoder:
       anchor: {ref: matrix_outer_num}
       key:
