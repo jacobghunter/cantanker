@@ -21,49 +21,42 @@ points:
             fillet: 3
       columns:
         outer:
-          rows.mod.skip: true
           rows.num.asym: source
           key:
-            column_net: P10
+            column_net: P21
             tags: [switch]
         pinky:
           key:
             stagger: 6
             splay: -5
-            column_net: P19
+            column_net: P20
             tags: [switch]
-          rows.mod.skip: true
         ring:
           key:
             splay: -3
             stagger: 7
-            column_net: P9
+            column_net: P19
             tags: [switch]
-          rows.mod.skip: true
         middle:
           key:
             stagger: 2.5
-            column_net: P0
+            column_net: P18
             tags: [switch]
-          rows.mod.skip: true
         index: 
-          key:
-            stagger: -2.5
-            column_net: P14
-            tags: [switch] 
-          rows.mod.skip: true
-        inner:
-          rows.mod.skip: true
           key:
             stagger: -2.5
             column_net: P15
             tags: [switch] 
+        inner:
+          key:
+            stagger: -2.5
+            column_net: P14
+            tags: [switch] 
       rows:
-        mod.row_net: P8  
-        bottom.row_net: P7
-        home.row_net: P6 
-        top.row_net: P5 
-        num.row_net: P4
+        bottom.row_net: P3
+        home.row_net: P2
+        top.row_net: P0
+        num.row_net: P1
     
     thumbs:
       key:
@@ -74,21 +67,21 @@ points:
           key:
             splay: -35
             shift: [0.35kx, -0.5ky]
-            column_net: P16
+            column_net: P14
             tags: [switch]
         space:
           key:
             width: 1.5kx
             splay: 65
             shift: [-0.2kx,-0.9ky]
-            column_net: P18
+            column_net: P16
             tags: [switch, key_1.5u]
       anchor:
-        ref: matrix_inner_mod
-        shift: [2, -2]
+        ref: matrix_inner_bottom
+        shift: [2, -2 + -kx]
       rows:
         cluster: 
-          row_net: P8
+          row_net: P4
 
     matrix_middle_mod_key:
       anchor:
@@ -97,8 +90,8 @@ points:
       key:
         rotate: -5
         shift: [0, 0]
-        column_net: P0
-        row_net: P8  
+        column_net: P18
+        row_net: P4
         tags: [switch]
 
     matrix_index_mod_key:
@@ -108,8 +101,8 @@ points:
       key:
         rotate: -20
         shift: [0, -0.5]
-        column_net: P14
-        row_net: P8  
+        column_net: P15
+        row_net: P4
         tags: [switch]
         
     right_encoder:
@@ -120,7 +113,7 @@ points:
         spread: 1kx
         footprint: Rotary
         shift: [0, 0.1kx]
-        nets: {a: R_P20, b: R_P101, from: R_P21, to: GND}
+        nets: {a: P10, b: P101, from: P9, to: GND}
         tags: [encoder] 
 
     left_encoder:
@@ -131,7 +124,7 @@ points:
         padding: 1ky
         spread: 1kx
         footprint: Rotary
-        nets: {a: P20, b: P101, from: P21, to: GND}
+        nets: {a: P10, b: P101, from: P9, to: GND}
         tags: [encoder]
 
     mcu:
@@ -151,28 +144,11 @@ points:
         tags: [oled]
         height: 36
         width: 14
-        nets: {gnd: GND, vcc: VCC, mosi: P1, sck: P2, cs: P3}
+        nets: {gnd: GND, vcc: VCC, mosi: P6, sck: P7, cs: P8}
       anchor:
         - ref: mcu
           shift: [0,-3.5]
 
-    battery_connector_under:
-      anchor:
-        - ref: mcu
-          shift: [0, 10]
-      key: 
-        tags: [jst]
-        nets: {pos: RAW, neg: GND}
-
-    battery_connector_lower:
-      anchor:
-        - ref: thumbs_layer_cluster
-          shift: [5, 15]
-          rotate: 180
-      key: 
-        tags: [jst]
-        nets: {pos: RAW, neg: GND}
-      
     left_power_sw:
       anchor: {ref: mcu, shift: [9.5, -68]}
       key:
@@ -206,7 +182,7 @@ points:
       key:
         asym: clone
         footprint: nice!nano_v2
-        nets: {vcc: VCC, gnd: GND, sda: TP_SDA, scl: TP_SCL, rdy: TP_RDY}
+        nets: {vcc: VCC, gnd: GND, sda: P8, scl: P7, rdy: P102}
         tags: [trackpad]
 
     mounting_hole_top_left:
@@ -214,14 +190,14 @@ points:
         ref: matrix_pinky_num
       key:
         tags: [hole]
-        shift: [-0.65kx, -0.5ky]
+        shift: [-0.6kx, -0.5ky]
     
     mounting_hole_bottom_left:
       anchor: 
-        ref: matrix_ring_mod
+        ref: matrix_ring_bottom
       key:
         tags: [hole]
-        shift: [0kx, 0.25ky]
+        shift: [0kx, -0.75ky]
 
     mounting_hole_top_right:
       anchor: 
@@ -243,7 +219,7 @@ outlines:
       fillet: 2
       where: "/switch/"
       size: [13.8, 13.8] 
-  
+
   _key_cutouts:
     - what: rectangle
       fillet: 2
@@ -427,41 +403,43 @@ pcbs:
           # Adds extra 3 pins
           include_extra_pins: true
           reverse_mount: true
-          
+
           # --- POWER ---
           VCC: "{{nets.VCC}}"
           GND: "{{nets.GND}}"
           RAW: "{{nets.RAW}}"
 
-          # --- ROWS ---
-          P8: "P8"
-          P7: "P7"
-          P6: "P6"
-          P5: "P5"
-          P4: "P4"
-          
-          # --- COLS ---
-          P10: "P10"
-          P19: "P19"
-          P9: "P9"
-          P0: "P0"
-          P14: "P14"
-          P15: "P15"
+          # Main matrix columns (top/sides)
+          P21: "P21" # Outer
+          P20: "P20" # Pinky
+          P19:  "P19"  # Ring
+          P18:  "P18"  # Middle (includes thumb key)
+          P15: "P15" # Index (includes thumb key)
+          P14: "P14" # Inner (includes thumb key)
 
-          # --- THUMB COLS ---
-          P16: "P16"
-          P18: "P18"
+          # --- ROWS (Mapped according to the board definition) ---
+          # Mapping the row connections to MCU pins based on your board layout
+          P1: "P1"   # Num row
+          P0: "P0"   # Top row
+          P2: "P2"   # Home row
+          P3: "P3"   # Bottom row
+          P4: "P4"   # Thumb row
 
-          # --- ENCODERS (Left nets) ---
-          P20: "P20"
-          P101: "P101"
-          P21: "P21"
+          # --- COLUMNS (Mapped to the MCU pins as per the board) ---
+          # Thumb columns placed in the bottom row
+          P16: "P16" # Thumb right
+
+          # --- ENCODER PINS ---
+          # Encoder mappings for left and right encoder (positions are kept as-is)
+          P10: "P10" # Encoder A (left encoder)
+          P101: "P101" # Encoder B (right encoder)
+          P9: "P9"  # Encoder C (right encoder)
 
           # --- DEVICES ---
-          P1: "P1" 
-          P2: "P2" 
-          P3: "P3" 
-          P102: "P102"
+          P8: "P8"    # Used for OLED
+          P7: "P7"    # Used for OLED
+          P6: "P6"    # Used for OLED
+          P102: ""    # Unused on left half
 
       mcu_right:
         what: ceoloide/mcu_supermini_nrf52840
@@ -477,36 +455,37 @@ pcbs:
           GND: "{{nets.GND}}"
           RAW: "{{nets.RAW}}"
 
-          # --- ROWS ---
-          P8: "P8"
-          P7: "P7"
-          P6: "P6"
-          P5: "P5"
-          P4: "P4"
-          
-          # --- COLS ---
-          P10: "P10"
-          P19: "P19"
-          P9: "P9"
-          P0: "P0"
-          P14: "P14"
-          P15: "P15"
+          # Main matrix columns (top/sides)
+          P21: "P21" # Outer
+          P20: "P20" # Pinky
+          P19:  "P19"  # Ring
+          P18:  "P18"  # Middle (includes thumb key)
+          P15: "P15" # Index (includes thumb key)
+          P14: "P14" # Inner (includes thumb key)
 
-          # --- THUMB COLS ---
-          P16: "P16"
-          P18: "P18"
+          # --- ROWS (Mapped according to the board definition) ---
+          # Mapping the row connections to MCU pins based on your board layout
+          P1: "P1"   # Num row
+          P0: "P0"   # Top row
+          P2: "P2"   # Home row
+          P3: "P3"   # Bottom row
+          P4: "P4"   # Thumb row
 
-          # --- ENCODERS (Right nets) ---
-          # Map physical pins to your NEW nets
-          P20: "R_P20"
-          P101: "R_P101"
-          P21: "R_P21"
+          # --- COLUMNS (Mapped to the MCU pins as per the board) ---
+          # Thumb columns placed in the bottom row
+          P16: "P16" # Thumb left
+
+          # --- ENCODER PINS ---
+          # Encoder mappings for left and right encoder (positions are kept as-is)
+          P10: "P10" # Encoder A (left encoder)
+          P101: "P101" # Encoder B (right encoder)
+          P9: "P9"  # Encoder C (right encoder)
 
           # --- DEVICES ---
-          P1: "P1"
-          P2: "TP_SDA"
-          P3: "TP_SCL"
-          P102: "TP_RDY"
+          P8: "P8"    # Used for Touchpad
+          P7: "P7"    # Used for Touchpad
+          P6: "P6"    # Used for Touchpad
+          P102: "P102" # Extra unused pins can be set to empty if not used
 
       oled: 
         what: ceoloide/display_nice_view
@@ -518,15 +497,7 @@ pcbs:
           MOSI: "{{nets.mosi}}"
           SCK: "{{nets.sck}}"
           CS: "{{nets.cs}}"
-
-      battery_connectors:
-        what: ceoloide/battery_connector_jst_ph_2
-        where: /jst/
-        params:
-          side: B
-          BAT_P: "{{nets.pos}}"
-          BAT_N: "{{nets.neg}}"
-          
+       
       power_switch_left:
         what: ceoloide/power_switch_smd_side
         where: /power_l/
