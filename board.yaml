@@ -147,11 +147,19 @@ points:
         - ref: mcu
           shift: [0,-3.5]
 
-    # Is it okay to put these under the mcu?
-    battery_connector:
+    battery_connector_under:
       anchor:
         - ref: mcu
           shift: [0, 10]
+      key: 
+        tags: [jst]
+        nets: {pos: RAW, neg: GND}
+
+    battery_connector_lower:
+      anchor:
+        - ref: thumbs_layer_cluster
+          shift: [5, 15]
+          rotate: 180
       key: 
         tags: [jst]
         nets: {pos: RAW, neg: GND}
@@ -172,6 +180,15 @@ points:
         footprint: Power_Switch_MSK12C02
         tags: [power_r] 
     
+    reset_button:
+      anchor:
+        ref: matrix_inner_num
+      key:
+        footprint: reset_switch
+        tags: [reset_button]
+        shift: [0.35kx, 0.625ky]
+        rotate: 0
+
     # Going to use the Azoteq TPS43 with the kit from https://holykeebs.com/products/touchpad-module
     trackpad_socket:
       anchor: {ref: matrix_inner_bottom, shift: [20, 6]}
@@ -179,7 +196,7 @@ points:
         asym: clone
         footprint: nice!nano_v2
         nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102}
-        tags: [trackpad, mcu] 
+        tags: [trackpad] 
 
     mounting_hole_top_left:
       anchor: 
@@ -238,7 +255,7 @@ outlines:
   _board:
     - what: polygon
       operation: stack
-      fillet: 4
+      fillet: 2
       points: 
         - ref: matrix_outer_num
           shift: [-0.5px,0.5py]
@@ -259,9 +276,9 @@ outlines:
         - ref: left_power_sw
           shift: [0.08px,0.2py]
         - ref: thumbs_space_cluster
-          shift: [0.75px,-0.55py]
+          shift: [0.6px,-0.45py]
         - ref: thumbs_space_cluster
-          shift: [-0.75px,-0.55py]
+          shift: [-0.6px,-0.45py]
         - ref: thumbs_layer_cluster
           shift: [0, -0.5py]
         - ref: matrix_index_mod_key
@@ -426,6 +443,10 @@ pcbs:
         params:
           reversible: true
           side: B
+
+      reset_buttons:
+        what: ceoloide/reset_switch_smd_side
+        where: /reset_button/
         
       encoders:
         what: ceoloide/rotary_encoder_ec11_ec12
