@@ -1,4 +1,4 @@
-# This is intended to be a split wireless corne-like keyboard with an Azoteq TPS43 mounted on the right
+# This is a split wireless corne-like keyboard with an Azoteq TPS43 mounted on the right
 
 units:
   kx: cx
@@ -24,46 +24,46 @@ points:
           rows.mod.skip: true
           rows.num.asym: source
           key:
-            nets: {col: P10}  # <-- FIXED
+            column_net: P10
             tags: [switch]
         pinky:
           key:
             stagger: 6
             splay: -5
-            nets: {col: P19}  # <-- FIXED
+            column_net: P19
             tags: [switch]
           rows.mod.skip: true
         ring:
           key:
             splay: -3
             stagger: 7
-            nets: {col: P9}   # <-- FIXED
+            column_net: P9
             tags: [switch]
           rows.mod.skip: true
         middle:
           key:
             stagger: 2.5
-            nets: {col: P0}   # <-- FIXED
+            column_net: P0
             tags: [switch]
           rows.mod.skip: true
         index: 
           key:
             stagger: -2.5
-            nets: {col: P14}  # <-- FIXED
+            column_net: P14
             tags: [switch] 
           rows.mod.skip: true
         inner:
           rows.mod.skip: true
           key:
             stagger: -2.5
-            nets: {col: P15}  # <-- FIXED
+            column_net: P15
             tags: [switch] 
       rows:
-        mod: {nets: {row: P8}}     # <-- FIXED
-        bottom: {nets: {row: P7}}  # <-- FIXED
-        home: {nets: {row: P6}}    # <-- FIXED
-        top: {nets: {row: P5}}     # <-- FIXED
-        num: {nets: {row: P4}}     # <-- FIXED
+        mod.row_net: P8  
+        bottom.row_net: P7
+        home.row_net: P6 
+        top.row_net: P5 
+        num.row_net: P4
     
     thumbs:
       key:
@@ -74,20 +74,21 @@ points:
           key:
             splay: -35
             shift: [0.35kx, -0.5ky]
-            nets: {col: P16}  # <-- FIXED
+            column_net: P16
             tags: [switch]
         space:
           key:
             width: 1.5kx
             splay: 65
             shift: [-0.2kx,-0.9ky]
-            nets: {col: P18}  # <-- FIXED
+            column_net: P18
             tags: [switch, key_1.5u]
       anchor:
         ref: matrix_inner_mod
         shift: [2, -2]
       rows:
-        cluster: {nets: {row: P8}} # <-- FIXED
+        cluster: 
+          row_net: P8
 
     matrix_middle_mod_key:
       anchor:
@@ -96,7 +97,8 @@ points:
       key:
         rotate: -5
         shift: [0, 0]
-        nets: {col: P0, row: P8}  # <-- FIXED
+        column_net: P0
+        row_net: P8  
         tags: [switch]
 
     matrix_index_mod_key:
@@ -106,7 +108,8 @@ points:
       key:
         rotate: -20
         shift: [0, -0.5]
-        nets: {col: P14, row: P8} # <-- FIXED
+        column_net: P14
+        row_net: P8  
         tags: [switch]
         
     right_encoder:
@@ -497,16 +500,18 @@ pcbs:
         params:
           hotswap: true
           from: "{{column_net}}"
-          to: "{{diode_net}}"
+          to: "{{colrow}}"
 
       diodes:
         what: ceoloide/diode_tht_sod123
         where: /switch/
         params:
-          from: "{{diode_net}}"
+          reversible: true
+          include_tht: true
+          from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
-          shift: [0, -5]
+          shift: [2, -5]
 
       trackpad:
         what: ceoloide/mcu_supermini_nrf52840
