@@ -139,6 +139,7 @@ points:
     
     display:
       key:
+        asym: source
         tags: [oled]
         height: 36
         width: 14
@@ -194,8 +195,8 @@ points:
       key:
         asym: clone
         footprint: nice!nano_v2
-        nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102}
-        tags: [trackpad] 
+        nets: {vcc: VCC, gnd: GND, sda: P2, scl: P3, rdy: P102} # This is now correct
+        tags: [trackpad]
 
     mounting_hole_top_left:
       anchor: 
@@ -411,8 +412,42 @@ pcbs:
         what: ceoloide/mcu_supermini_nrf52840
         where: /mcu/ 
         params:
+          # --- POWER ---
           VCC: "{{nets.VCC}}"
           GND: "{{nets.GND}}"
+          RAW: "{{nets.RAW}}"
+
+          # --- ROWS ---
+          P8: "P8"
+          P7: "P7"
+          P6: "P6"
+          P5: "P5"
+          P4: "P4"
+          
+          # --- COLS ---
+          P10: "P10"
+          P19: "P19"
+          P9: "P9"
+          P0: "P0"
+          P14: "P14"
+          P15: "P15"
+
+          # --- THUMB COLS ---
+          P16: "P16"
+          P18: "P18"
+
+          # --- ENCODERS ---
+          P20: "P20"
+          P101: "P101"
+          P21: "P21"
+
+          # --- DEVICES (This now works) ---
+          # On Left (source): P1, P2, P3 connect to Display
+          # On Right (clone): P1 is unused, P2, P3 connect to Trackpad
+          P1: "P1"     
+          P2: "P2"     
+          P3: "P3"     
+          P102: "P102" # Trackpad 'rdy' (right side only)
 
       oled: 
         what: ceoloide/display_nice_view
