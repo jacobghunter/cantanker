@@ -155,7 +155,7 @@ points:
         asym: source
         footprint: Power_Switch_MSK12C02
         tags: [power_l] 
-        nets: {from: RAW, to: VCC}
+        nets: {from: BAT_P, to: RAW}
     
     right_power_sw:
       anchor: {ref: mcu, shift: [9.5, -68]}
@@ -164,7 +164,7 @@ points:
         rotate: 180
         footprint: Power_Switch_MSK12C02
         tags: [power_r] 
-        nets: {from: RAW, to: VCC}
+        nets: {from: BAT_P, to: RAW}
     
     reset_button:
       anchor:
@@ -184,6 +184,23 @@ points:
         footprint: nice!nano_v2
         nets: {vcc: VCC, gnd: GND, sda: P8, scl: P7, rdy: P102}
         tags: [trackpad]
+
+    battery_connector_under:
+      anchor:
+        - ref: mcu
+          shift: [0, 10]
+      key: 
+        tags: [jst]
+        nets: {pos: BAT_P, neg: GND}
+
+    battery_connector_lower:
+      anchor:
+        - ref: thumbs_layer_cluster
+          shift: [5, 15]
+          rotate: 180
+      key: 
+        tags: [jst]
+        nets: {pos: BAT_P, neg: GND}
 
     mounting_hole_top_left:
       anchor: 
@@ -593,6 +610,15 @@ pcbs:
           P20: ""
           P21: ""
           P101: ""
+
+      battery_connectors:
+        what: ceoloide/battery_connector_jst_ph_2
+        where: /jst/
+        params:
+          reversible: true
+          side: B
+          BAT_P: "{{nets.pos}}"
+          BAT_N: "{{nets.neg}}"
 
       standoffs:
         what: ceoloide/mounting_hole_plated
