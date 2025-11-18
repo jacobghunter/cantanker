@@ -150,7 +150,7 @@ points:
           shift: [0,-3.5]
 
     left_power_sw:
-      anchor: {ref: mcu, shift: [9.5, -68]}
+      anchor: {ref: mcu, shift: [9, -68]}
       key:
         asym: source
         footprint: Power_Switch_MSK12C02
@@ -158,7 +158,7 @@ points:
         nets: {from: BAT_P, to: RAW}
     
     right_power_sw:
-      anchor: {ref: mcu, shift: [9.5, -68]}
+      anchor: {ref: mcu, shift: [9, -68]}
       key:
         asym: clone
         rotate: 180
