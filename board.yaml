@@ -14,7 +14,7 @@ points:
       anchor: {shift: [40, -150]}
       key:
         padding: 1ky
-        spread: 1kx
+        spread: 1kx + 0.5
         draw:
           - what: rectangle
             size: 18
