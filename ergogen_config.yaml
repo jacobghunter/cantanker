@@ -57,7 +57,7 @@ points:
         home.row_net: row_home
         top.row_net: row_top
         num.row_net: row_num
-    
+        
     thumbs:
       key:
         padding: 1ky
@@ -83,17 +83,22 @@ points:
         cluster: 
           row_net: row_thumb
 
+    # The naming of this key isnt quite correct, the pad will be middle_mod_default
     matrix_middle_mod_key:
       anchor:
         ref: matrix_middle_bottom
         shift: [-0.02kx, -1.16ky]
-      key:
-        rotate: -5
-        shift: [0, 0]
-        column_net: col_middle
-        row_net: row_thumb
-        tags: [switch]
+      columns:
+        middle_mod:
+          key:
+            name:
+            rotate: -5
+            shift: [0, 0]
+            column_net: col_middle
+            row_net: row_thumb
+            tags: [switch]
 
+    # This ones name will just be default default but thats fine for my uses
     matrix_index_mod_key:
       anchor:
         ref: matrix_index_bottom
@@ -538,6 +543,7 @@ pcbs:
         params: 
           A: "{{nets.a}}" 
           B: "{{nets.b}}"
+          C: "{{nets.to}}"
           S1: "{{nets.from}}"
           S2: "{{nets.to}}"
 
