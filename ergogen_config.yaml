@@ -438,6 +438,7 @@ pcbs:
           P18: "col_middle"  # Middle (includes thumb key)
           P15: "col_index" # Index (includes thumb key)
           P14: "col_inner" # Inner (includes thumb key)
+          P9: "col_thumb"
 
           # --- ROWS (Mapped according to the board definition) ---
           # Mapping the row connections to MCU pins based on your board layout
@@ -446,7 +447,6 @@ pcbs:
           P2: "row_home"   # Home row
           P3: "row_bottom"   # Bottom row
           P4: "row_thumb"   # Thumb row
-          P9: "col_thumb"
 
           # --- ENCODER PINS ---
           P6: "encoder_a"
@@ -520,6 +520,7 @@ pcbs:
         what: ceoloide/power_switch_smd_side
         where: /power_l/
         params:
+          invert_behavior: true
           from: "{{nets.from}}"
           to: "{{nets.to}}"
       
@@ -542,8 +543,8 @@ pcbs:
         where: /encoder/
         params: 
           A: "{{nets.a}}" 
-          B: "{{nets.b}}"
-          C: "{{nets.to}}"
+          B: "{{nets.to}}"
+          C: "{{nets.b}}"
           S1: "{{nets.from}}"
           S2: "{{nets.to}}"
 
