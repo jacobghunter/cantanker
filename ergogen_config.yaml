@@ -251,7 +251,7 @@ outlines:
   _encoder_cutouts:
     - what: circle
       where: /encoder/
-      radius: 8
+      radius: 9
 
   _trackpad_cutout:
     - what: rectangle
@@ -479,6 +479,8 @@ outlines:
   plate:
     - name: _switch_plate_perimeter
     - name: _switch_cutouts
+      operation: subtract
+    - name: _encoder_cutouts
       operation: subtract
   
   preview:
