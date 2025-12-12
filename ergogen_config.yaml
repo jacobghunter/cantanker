@@ -236,9 +236,9 @@ points:
         shift: [0kx, -0.8ky]
 
 outlines:
-  switch_cutouts:
+  _switch_cutouts:
     - what: rectangle
-      fillet: 2
+      fillet: 0.5
       where: "/switch/"
       size: [13.8, 13.8] 
 
@@ -261,7 +261,7 @@ outlines:
       adjust:
         shift: [12, -3]
 
-  _board:
+  board:
     - what: polygon
       operation: stack
       fillet: 4
@@ -339,6 +339,13 @@ outlines:
         - ref: mirror_matrix_outer_bottom
           shift: [-0.55px,-0.55py]
 
+  board_wall:
+    - name: board
+      expand: 2
+      joints: 0
+    - name: board
+      operation: subtract
+
   _mcu:
     - what: rectangle
       where: /mcu/
@@ -389,8 +396,93 @@ outlines:
       operation: stack
       radius: 1.1
 
-  default:
-    - name: _board
+  _switch_plate_perimeter:
+    - what: polygon
+      operation: stack
+      fillet: 4
+      points:
+        - ref: matrix_outer_num
+          shift: [-0.5px,0.5py]
+        - ref: matrix_ring_num
+          shift: [-0.5px,0.5py]
+        - ref: matrix_middle_num
+          shift: [-0.5px,0.5py]
+        - ref: matrix_middle_num
+          shift: [0.5px,0.5py]
+        - ref: matrix_index_num
+          shift: [0.5px,0.5py]
+        
+        - ref: matrix_inner_num
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_bottom
+          shift: [0.5px, -0.5py]
+
+        - ref: thumbs_space_cluster
+          shift: [0.8px,0.5py]
+        - ref: thumbs_space_cluster
+          shift: [0.75px,-0.55py]
+        - ref: thumbs_space_cluster
+          shift: [-0.75px,-0.55py]
+        - ref: thumbs_layer_cluster
+          shift: [0, -0.5py]
+        - ref: matrix_index_mod_key
+          shift: [-0.5px,-0.55py]
+        - ref: matrix_ring_bottom
+          shift: [0,-1.2py]
+        - ref: matrix_outer_bottom
+          shift: [0.5px,-0.55py]
+        - ref: matrix_outer_bottom
+          shift: [-0.55px,-0.55py]
+
+    - what: polygon
+      operation: stack
+      fillet: 4
+      points: 
+        # --- RIGHT HALF (MIRROR) POINTS ---
+        - ref: mirror_right_encoder
+          shift: [-0.5px,0.4py]
+        - ref: mirror_matrix_pinky_num
+          shift: [-0.5px,0.5py]
+        - ref: mirror_matrix_ring_num
+          shift: [-0.5px,0.5py]
+        - ref: mirror_matrix_middle_num
+          shift: [-0.5px,0.5py]
+        - ref: mirror_matrix_middle_num
+          shift: [0.5px,0.5py]
+        - ref: mirror_matrix_index_num
+          shift: [0.5px,0.5py]
+
+        # [CHANGED] Connect to the Mirror Inner Column instead of Mirror MCU
+        - ref: mirror_matrix_inner_num
+          shift: [0.5px, 0.5py]
+        - ref: mirror_matrix_inner_bottom
+          shift: [0.5px, -0.5py]
+
+        # Continue to thumbs as normal
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.8px,0.5py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.75px,-0.55py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [-0.75px,-0.55py]
+        - ref: mirror_thumbs_layer_cluster
+          shift: [0, -0.5py]
+        - ref: mirror_matrix_index_mod_key
+          shift: [-0.5px,-0.55py]
+        - ref: mirror_matrix_ring_bottom
+          shift: [0,-1.2py]
+        - ref: mirror_matrix_outer_bottom
+          shift: [0.5px,-0.55py]
+        - ref: mirror_matrix_outer_bottom
+          shift: [-0.55px,-0.55py]
+  
+  plate:
+    - name: _switch_plate_perimeter
+    - name: _switch_cutouts
+      operation: subtract
+  
+  preview:
+    - name: board
     - name: _key_cutouts
       operation: subtract
     - name: _encoder_cutouts
@@ -415,7 +507,7 @@ pcbs:
   board:
     template: kicad8
     outlines: 
-      main.outline: _board
+      main.outline: board
     footprints:
       mcu_left:
         what: ceoloide/mcu_supermini_nrf52840
@@ -621,3 +713,14 @@ pcbs:
         where: /hole/
         params:
           drill: 2.2
+
+cases: 
+  bottom:
+    - name: board
+      extrude: 1
+    - name: board_wall
+      extrude: 8
+  
+  key_plate:
+    - name: plate
+      extrude: 1.5
