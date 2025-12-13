@@ -5,6 +5,7 @@ units:
   ky: cy
   px: kx + 4
   py: ky + 4
+  bezel: 5
 points:
   mirror: &mirror
     ref: matrix_inner_num
@@ -238,9 +239,9 @@ points:
 outlines:
   _switch_cutouts:
     - what: rectangle
-      fillet: 0.5
+      fillet: 1
       where: "/switch/"
-      size: [13.8, 13.8] 
+      size: [14, 14] 
 
   _key_cutouts:
     - what: rectangle
@@ -341,7 +342,7 @@ outlines:
 
   board_wall:
     - name: board
-      expand: 2
+      expand: bezel
       joints: 0
     - name: board
       operation: subtract
@@ -399,82 +400,101 @@ outlines:
   _switch_plate_perimeter:
     - what: polygon
       operation: stack
-      fillet: 4
-      points:
+      fillet: 4 + bezel
+      points: 
+        # --- LEFT HALF ---
+        # Top-Left Corner (Expand X and Y)
         - ref: matrix_outer_num
-          shift: [-0.5px,0.5py]
-        - ref: matrix_ring_num
-          shift: [-0.5px,0.5py]
-        - ref: matrix_middle_num
-          shift: [-0.5px,0.5py]
-        - ref: matrix_middle_num
-          shift: [0.5px,0.5py]
-        - ref: matrix_index_num
-          shift: [0.5px,0.5py]
+          shift: [-0.5px - bezel, 0.5py + bezel]
         
+        # Top Edge (Expand Y only)
+        - ref: matrix_pinky_num
+          shift: [-0.5px, 0.5py + bezel]
+        - ref: matrix_ring_num
+          shift: [-0.5px, 0.5py + bezel]
+        - ref: matrix_middle_num
+          shift: [-0.5px, 0.5py + bezel]
+        - ref: matrix_middle_num
+          shift: [0.5px, 0.5py + bezel]
+        - ref: matrix_index_num
+          shift: [0.5px, 0.5py + bezel]
+        
+        # [CRITICAL PART] Inner Edge (Next to MCU)
+        # We Expand Y to match bezel, but keep X at 0.5px (Flush)
         - ref: matrix_inner_num
-          shift: [0.5px, 0.5py]
+          shift: [0.5px, 0.5py + bezel]   
         - ref: matrix_inner_bottom
-          shift: [0.5px, -0.5py]
+          shift: [0.5px, -0.5py - bezel]  
 
+        # Thumbs 
         - ref: thumbs_space_cluster
-          shift: [0.8px,0.5py]
+          shift: [0.8px, 0.5py] # Inner corner usually stays flush
         - ref: thumbs_space_cluster
-          shift: [0.75px,-0.55py]
+          shift: [0.75px + bezel, -0.55py - bezel]
         - ref: thumbs_space_cluster
-          shift: [-0.75px,-0.55py]
+          shift: [-0.75px - bezel, -0.55py - bezel]
+        
+        # Bottom Edge Walking Back
         - ref: thumbs_layer_cluster
-          shift: [0, -0.5py]
+          shift: [0, -0.5py - bezel]
         - ref: matrix_index_mod_key
-          shift: [-0.5px,-0.55py]
+          shift: [-0.5px, -0.55py - bezel]
         - ref: matrix_ring_bottom
-          shift: [0,-1.2py]
+          shift: [0, -1.2py - bezel]
         - ref: matrix_outer_bottom
-          shift: [0.5px,-0.55py]
+          shift: [0.5px, -0.55py - bezel]
+        
+        # Bottom-Left Corner
         - ref: matrix_outer_bottom
-          shift: [-0.55px,-0.55py]
+          shift: [-0.55px - bezel, -0.55py - bezel]
+
+    -71.53 56.67
 
     - what: polygon
       operation: stack
-      fillet: 4
+      fillet: 4 + bezel
       points: 
-        # --- RIGHT HALF (MIRROR) POINTS ---
+        # --- RIGHT HALF (MIRROR) ---
+        # Top-Right Corner
         - ref: mirror_right_encoder
-          shift: [-0.5px,0.4py]
+          shift: [-0.5px - bezel, 0.4py + bezel]
+        
+        # Top Edge
         - ref: mirror_matrix_pinky_num
-          shift: [-0.5px,0.5py]
+          shift: [-0.5px, 0.5py + bezel]
         - ref: mirror_matrix_ring_num
-          shift: [-0.5px,0.5py]
+          shift: [-0.5px, 0.5py + bezel]
         - ref: mirror_matrix_middle_num
-          shift: [-0.5px,0.5py]
+          shift: [-0.5px, 0.5py + bezel]
         - ref: mirror_matrix_middle_num
-          shift: [0.5px,0.5py]
+          shift: [0.5px, 0.5py + bezel]
         - ref: mirror_matrix_index_num
-          shift: [0.5px,0.5py]
+          shift: [0.5px, 0.5py + bezel]
 
-        # [CHANGED] Connect to the Mirror Inner Column instead of Mirror MCU
+        # [CRITICAL PART] Mirror Inner Edge (Next to MCU)
+        # Keep X flush, Expand Y
         - ref: mirror_matrix_inner_num
-          shift: [0.5px, 0.5py]
+          shift: [0.5px, 0.5py + bezel]
         - ref: mirror_matrix_inner_bottom
-          shift: [0.5px, -0.5py]
+          shift: [0.5px, -0.5py - bezel]
 
-        # Continue to thumbs as normal
+        # Thumbs
         - ref: mirror_thumbs_space_cluster
-          shift: [0.8px,0.5py]
+          shift: [0.8px, 0.5py]
         - ref: mirror_thumbs_space_cluster
-          shift: [0.75px,-0.55py]
+          shift: [0.75px + bezel, -0.55py - bezel]
         - ref: mirror_thumbs_space_cluster
-          shift: [-0.75px,-0.55py]
+          shift: [-0.75px - bezel, -0.55py - bezel]
         - ref: mirror_thumbs_layer_cluster
-          shift: [0, -0.5py]
+          shift: [0, -0.5py - bezel]
         - ref: mirror_matrix_index_mod_key
-          shift: [-0.5px,-0.55py]
+          shift: [-0.5px, -0.55py - bezel]
         - ref: mirror_matrix_ring_bottom
-          shift: [0,-1.2py]
+          shift: [0, -1.2py - bezel]
         - ref: mirror_matrix_outer_bottom
-          shift: [0.5px,-0.55py]
+          shift: [0.5px, -0.55py - bezel]
         - ref: mirror_matrix_outer_bottom
-          shift: [-0.55px,-0.55py]
+          shift: [-0.55px - bezel, -0.55py - bezel]
   
   plate:
     - name: _switch_plate_perimeter
@@ -721,7 +741,7 @@ cases:
     - name: board
       extrude: 1
     - name: board_wall
-      extrude: 8
+      extrude: 5.1
   
   key_plate:
     - name: plate
