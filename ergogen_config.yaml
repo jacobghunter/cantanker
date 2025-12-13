@@ -5,7 +5,8 @@ units:
   ky: cy
   px: kx + 4
   py: ky + 4
-  bezel: 5
+  bezel: 6
+  tolerance: 0.5
 points:
   mirror: &mirror
     ref: matrix_inner_num
@@ -345,6 +346,7 @@ outlines:
       expand: bezel
       joints: 0
     - name: board
+      expand: 0
       operation: subtract
 
   _mcu:
@@ -448,8 +450,6 @@ outlines:
         - ref: matrix_outer_bottom
           shift: [-0.55px - bezel, -0.55py - bezel]
 
-    -71.53 56.67
-
     - what: polygon
       operation: stack
       fillet: 4 + bezel
@@ -523,7 +523,9 @@ outlines:
       operation: subtract
     - name: _thumb_keys
       operation: subtract
-    
+
+  
+  
 
 pcbs:
   board:
@@ -741,7 +743,7 @@ cases:
     - name: board
       extrude: 1
     - name: board_wall
-      extrude: 5.1
+      extrude: 10.1
   
   key_plate:
     - name: plate
