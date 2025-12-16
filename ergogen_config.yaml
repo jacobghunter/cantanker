@@ -6,7 +6,7 @@ units:
   px: kx + 4
   py: ky + 4
   bezel: 6
-  tolerance: 0.5
+  tolerance: 1
 points:
   mirror: &mirror
     ref: matrix_inner_num
@@ -349,6 +349,16 @@ outlines:
       expand: 0
       operation: subtract
 
+  _outer_case:
+    - name: board
+      expand: bezel
+      joints: 0
+
+  _inner_cutout:
+    - name: board
+      expand: tolerance
+      joints: 0
+
   _mcu:
     - what: rectangle
       where: /mcu/
@@ -496,12 +506,7 @@ outlines:
         - ref: mirror_matrix_outer_bottom
           shift: [-0.55px - bezel, -0.55py - bezel]
   
-  plate:
-    - name: _switch_plate_perimeter
-    - name: _switch_cutouts
-      operation: subtract
-    - name: _encoder_cutouts
-      operation: subtract
+  
   
   preview:
     - name: board
@@ -524,7 +529,14 @@ outlines:
     - name: _thumb_keys
       operation: subtract
 
-  
+  plate:
+    - name: _switch_plate_perimeter
+    - name: _switch_cutouts
+      operation: subtract
+    - name: _encoder_cutouts
+      operation: subtract
+    - name: preview
+      operation: stack
   
 
 pcbs:
@@ -738,13 +750,26 @@ pcbs:
         params:
           drill: 2.2
 
-cases: 
+cases:
   bottom:
-    - name: board
+    # 1. THE FLOOR (Full Size)
+    # Uses the pre-expanded outer shape
+    - name: _outer_case
       extrude: 1
-    - name: board_wall
+
+    # 2. THE WALL BODY (Full Size)
+    - name: _outer_case
       extrude: 10.1
-  
+      shift: [0,0,1]
+      operation: add
+
+    # 3. THE CUTOUT (PCB Size + Tolerance)
+    # Uses the pre-expanded tolerance shape
+    - name: _inner_cutout
+      extrude: 10.1
+      shift: [0,0,1]
+      operation: subtract
+
   key_plate:
     - name: plate
       extrude: 1.5
