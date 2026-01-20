@@ -263,6 +263,110 @@ outlines:
       adjust:
         shift: [12, -3]
 
+  _switch_plate_perimeter:
+    - what: polygon
+      operation: stack
+      fillet: 4
+      points: 
+        # --- LEFT HALF ---
+        # Top-Left Corner (Expand X and Y)
+        - ref: matrix_outer_num
+          shift: [-0.5px, 0.5py]
+        
+        # Top Edge (Expand Y only)
+        - ref: matrix_pinky_num
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_ring_num
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_num
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_num
+          shift: [0.5px, 0.5py]
+        - ref: matrix_index_num
+          shift: [0.5px, 0.5py]
+        
+        # [CRITICAL PART] Inner Edge (Next to MCU)
+        # We Expand Y to match bezel, but keep X at 0.5px (Flush)
+        - ref: matrix_inner_num
+          shift: [0.5px, 0.5py]   
+        - ref: matrix_inner_bottom
+          shift: [0.5px, -0.5py]  
+
+        # Thumbs 
+        - ref: thumbs_space_cluster
+          shift: [0.8px, 0.5py] # Inner corner usually stays flush
+        - ref: thumbs_space_cluster
+          shift: [0.75px, -0.55py]
+        - ref: thumbs_space_cluster
+          shift: [-0.75px, -0.55py]
+        
+        # Bottom Edge Walking Back
+        - ref: thumbs_layer_cluster
+          shift: [0, -0.5py]
+        - ref: matrix_index_mod_key
+          shift: [-0.5px, -0.55py]
+        - ref: matrix_ring_bottom
+          shift: [0, -1.2py]
+        - ref: matrix_outer_bottom
+          shift: [0.5px, -0.55py]
+        
+        # Bottom-Left Corner
+        - ref: matrix_outer_bottom
+          shift: [-0.55px, -0.55py]
+
+    - what: polygon
+      operation: stack
+      fillet: 4
+      points: 
+        # --- RIGHT HALF (MIRROR) ---
+        # Top-Right Corner
+        - ref: mirror_right_encoder
+          shift: [-0.5px, 0.4py]
+        
+        # Top Edge
+        - ref: mirror_matrix_pinky_num
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_ring_num
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_middle_num
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_middle_num
+          shift: [0.5px, 0.5py]
+        - ref: mirror_matrix_index_num
+          shift: [0.5px, 0.5py]
+
+        # [CRITICAL PART] Mirror Inner Edge (Next to MCU)
+        # Keep X flush, Expand Y
+        - ref: mirror_matrix_inner_num
+          shift: [0.5px, 0.5py]
+        - ref: mirror_matrix_inner_bottom
+          shift: [0.5px, -0.5py]
+
+        # Thumbs
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.8px, 0.5py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.75px, -0.55py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [-0.75px, -0.55py]
+        - ref: mirror_thumbs_layer_cluster
+          shift: [0, -0.5py]
+        - ref: mirror_matrix_index_mod_key
+          shift: [-0.5px, -0.55py]
+        - ref: mirror_matrix_ring_bottom
+          shift: [0, -1.2py]
+        - ref: mirror_matrix_outer_bottom
+          shift: [0.5px, -0.55py]
+        - ref: mirror_matrix_outer_bottom
+          shift: [-0.55px, -0.55py]
+
+  plate: 
+    - name: _switch_plate_perimeter
+    - name: _switch_cutouts
+      operation: subtract
+    - name: _encoder_cutouts
+      operation: subtract
+
   board:
     - what: polygon
       operation: stack
@@ -409,7 +513,7 @@ outlines:
       operation: stack
       radius: 1.1
 
-  _switch_plate_perimeter:
+  _switch_plate_perimeter_wide:
     - what: polygon
       operation: stack
       fillet: 4 + bezel
@@ -506,8 +610,17 @@ outlines:
         - ref: mirror_matrix_outer_bottom
           shift: [-0.55px - bezel, -0.55py - bezel]
   
+
+  plate_wide:
+    - name: _switch_plate_perimeter_wide
+    - name: _switch_cutouts
+      operation: subtract
+    - name: _encoder_cutouts
+      operation: subtract
+    # - name: preview
+    #   operation: stack
   
-  
+
   preview:
     - name: board
     - name: _key_cutouts
@@ -528,16 +641,6 @@ outlines:
       operation: subtract
     - name: _thumb_keys
       operation: subtract
-
-  plate:
-    - name: _switch_plate_perimeter
-    - name: _switch_cutouts
-      operation: subtract
-    - name: _encoder_cutouts
-      operation: subtract
-    - name: preview
-      operation: stack
-  
 
 pcbs:
   board:
@@ -751,7 +854,7 @@ pcbs:
           drill: 2.2
 
 cases:
-  bottom:
+  bottom_wide_case:
     # 1. THE FLOOR (Full Size)
     # Uses the pre-expanded outer shape
     - name: _outer_case
@@ -771,5 +874,5 @@ cases:
       operation: subtract
 
   key_plate:
-    - name: plate
+    - name: plate_wide
       extrude: 1.5
