@@ -36,7 +36,7 @@ jobs:
           mkdir -p docs/images
           cd Generated_Docs/${{ matrix.board_name }}/Renders/
           for file in *.png; do
-            cp "$file" "../../../docs/images/${{ matrix.board_name }}-$file"
+            cp "$file" "../../../docs/images/$file" 
           done
           cd ../../../
 
