@@ -1,7 +1,22 @@
 ![PXL_20260311_054345113](https://github.com/user-attachments/assets/74d0cc48-0b37-409a-a0bc-0dccf495e4b3)
 
-The **Cantanker** case and plates were designed in FreeCAD. 
-You can find the source FCStd file [here](mechanical/Cantanker_Case_and_Plates.FCStd) print-ready exports below:
+This is a custom wireless split ergo keyboard designed withwired with  case designed with 
+## Tools/software Used:
+- [Ergogen](https://github.com/ergogen/ergogen) for layout and PCB generation as well as DXF files for case design
+- [KiCad](https://www.kicad.org/) to wire the PCB
+- [FreeCAD](https://www.freecad.org/) for case and plate design
+- [ZMK](https://zmk.dev/) for the wireless firmware
+- A slightly modified version of [this](https://github.com/AYM1607/zmk-driver-azoteq-iqs5xx) trackpad firmware by AYM1607
+
+Its main features are:
+- Bluetooth low energy connectivity
+- Azotec TPS43 trackpad mounted on the right side
+- 5000mAh batteries in each side
+- Dual rotary encoders
+- Nice! View display
+- Low profile with choc v1 switches
+
+You can find the source FCStd file for the case and plates [here](mechanical/Cantanker_Case_and_Plates.FCStd) print-ready exports below:
 
 | Part | STLs | STEPs |
 | :--- | :--- | :--- |

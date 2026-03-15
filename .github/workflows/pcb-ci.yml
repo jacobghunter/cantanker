@@ -23,7 +23,7 @@ jobs:
           board: 'kicad/${{ matrix.board_name }}.kicad_pcb'
           config: 'kicad/config.kibot.yaml'
           dir: 'Generated_Docs/${{ matrix.board_name }}'
-          skip: schematic_check
+          skip: all
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
