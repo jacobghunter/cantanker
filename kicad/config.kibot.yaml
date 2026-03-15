@@ -1,0 +1,30 @@
+kibot:
+  version: 1
+
+outputs:
+  - name: 'Gerbers'
+    comment: "Gerbers and Drill files"
+    type: gerber
+    dir: 'Gerbers'
+    options:
+      use_aux_axis_as_origin: true
+
+  - name: 'Drill'
+    type: excellon
+    dir: 'Gerbers'
+
+  - name: 'PCB_Top_Render'
+    comment: "Top view of the board"
+    type: render_3d
+    options:
+      view: top
+      ray_tracing: true
+    dir: 'Renders'
+
+  - name: 'PCB_Bottom_Render'
+    comment: "Bottom view of the board"
+    type: render_3d
+    options:
+      view: bottom
+      ray_tracing: true
+    dir: 'Renders'
