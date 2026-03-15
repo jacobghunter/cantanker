@@ -18,7 +18,7 @@ Its main features are:
 - Low profile with choc v1 switches
 
 ## PCB Renders
-| Side | Top View | Bottom View |
+| Side | Top | Bottom |
 | :--- | :---: | :---: |
 | **Left Half** | ![Left Top](docs/images/left_half-3D_top.png) | ![Left Bottom](docs/images/left_half-3D_bottom.png) |
 | **Right Half** | ![Right Top](docs/images/right_half-3D_top.png) | ![Right Bottom](docs/images/right_half-3D_bottom.png) |
