@@ -17,8 +17,13 @@ Its main features are:
 - Nice! View display
 - Low profile with choc v1 switches
 
-You can find the source FCStd file for the case and plates [here](mechanical/Cantanker_Case_and_Plates.FCStd) and print-ready exports below:
+## PCB Renders
+| Side | Top View | Bottom View |
+| :--- | :---: | :---: |
+| **Left Half** | ![Left Top](docs/images/left_half-PCB_Top_Render.png) | ![Left Bottom](docs/images/left_half-PCB_Bottom_Render.png) |
+| **Right Half** | ![Right Top](docs/images/right_half-PCB_Top_Render.png) | ![Right Bottom](docs/images/right_half-PCB_Bottom_Render.png) |
 
+You can find the source FCStd file for the case and plates [here](mechanical/Cantanker_Case_and_Plates.FCStd) and print-ready exports below:
 | Part | STLs | STEPs |
 | :--- | :--- | :--- |
 | **Left Case** | [Download](mechanical/exports/Cantanker_Left_Case.stl) | [Download](mechanical/exports/Cantanker_Left_Case.step) |
