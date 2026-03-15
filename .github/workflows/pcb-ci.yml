@@ -1,0 +1,33 @@
+name: Generate PCB Docs
+
+on:
+  push:
+    paths:
+      - 'kicad/**.kicad_sch'
+      - 'kicad/**.kicad_pcb'
+  workflow_dispatch:
+
+jobs:
+  kibot:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board_name: [left_half, right_half]
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: KiBot for ${{ matrix.board_name }}
+        uses: INTI-CMNB/KiBot@v2
+        with:
+          schema: 'kicad/${{ matrix.board_name }}.kicad_sch'
+          board: 'kicad/${{ matrix.board_name }}.kicad_pcb'
+          config: default
+          dir: 'Generated_Docs/${{ matrix.board_name }}'
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.board_name }}-export
+          path: 'Generated_Docs/${{ matrix.board_name }}'
