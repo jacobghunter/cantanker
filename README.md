@@ -20,8 +20,8 @@ Its main features are:
 ## PCB Renders
 | Side | Top View | Bottom View |
 | :--- | :---: | :---: |
-| **Left Half** | ![Left Top](docs/images/left_half-PCB_Top_Render.png) | ![Left Bottom](docs/images/left_half-PCB_Bottom_Render.png) |
-| **Right Half** | ![Right Top](docs/images/right_half-PCB_Top_Render.png) | ![Right Bottom](docs/images/right_half-PCB_Bottom_Render.png) |
+| **Left Half** | ![Left Top](docs/images/left_half-3D_top.png) | ![Left Bottom](docs/images/left_half-3D_bottom.png) |
+| **Right Half** | ![Right Top](docs/images/right_half-3D_top.png) | ![Right Bottom](docs/images/right_half-3D_bottom.png) |
 
 You can find the source FCStd file for the case and plates [here](mechanical/Cantanker_Case_and_Plates.FCStd) and print-ready exports below:
 | Part | STLs | STEPs |
