@@ -30,3 +30,26 @@ jobs:
         with:
           name: ${{ matrix.board_name }}-gerbers
           path: 'Generated_Docs/${{ matrix.board_name }}'
+
+      - name: Commit Renders to Repo
+        run: |
+          mkdir -p docs/images
+          cd Generated_Docs/${{ matrix.board_name }}/Renders/
+          for file in *.png; do
+            cp "$file" "../../../docs/images/${{ matrix.board_name }}-$file"
+          done
+          cd ../../../
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add docs/images/*.png
+          
+          if git diff --staged --quiet; then
+            echo "No changes to renders."
+          else
+            git commit -m "docs: update pcb renders for ${{ matrix.board_name }} [skip ci]"
+            # Pull with rebase handles the matrix jobs finishing at similar times
+            git pull --rebase origin main
+            git push origin main
+          fi 
