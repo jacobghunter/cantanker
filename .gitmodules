@@ -1,0 +1,6 @@
+[submodule "cantanker-shield"]
+	path = cantanker-shield
+	url = git@github.com:jacobghunter/cantanker-shield.git
+[submodule "zmk-driver-azoteq-iqs5xx"]
+	path = zmk-driver-azoteq-iqs5xx
+	url = git@github.com:jacobghunter/zmk-driver-azoteq-iqs5xx.git
