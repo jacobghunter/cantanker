@@ -1,0 +1,17 @@
+# KiCad Backup files (redundant with Git)
+*-backups/
+*.bak
+*.kicad_pcb-bak
+*.kicad_sch-bak
+
+# Local settings and caches
+fp-info-cache
+*.kicad_prl
+*.lck
+
+# Manufacturing outputs (Let KiBot handle these)
+gerbers/
+*.gbr
+*.drl
+*.gbrjob
+*.zip
