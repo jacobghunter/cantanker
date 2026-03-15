@@ -18,10 +18,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: KiBot for ${{ matrix.board_name }}
-        uses: INTI-CMNB/KiBot@v2
+        uses: INTI-CMNB/KiBot@v2_dk9
         with:
           board: 'kicad/${{ matrix.board_name }}.kicad_pcb'
-          config: default
           dir: 'Generated_Docs/${{ matrix.board_name }}'
           skip: schematic_check
 
