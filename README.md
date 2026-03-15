@@ -16,7 +16,7 @@ Its main features are:
 - Nice! View display
 - Low profile with choc v1 switches
 
-You can find the source FCStd file for the case and plates [here](mechanical/Cantanker_Case_and_Plates.FCStd) print-ready exports below:
+You can find the source FCStd file for the case and plates [here](mechanical/Cantanker_Case_and_Plates.FCStd) and print-ready exports below:
 
 | Part | STLs | STEPs |
 | :--- | :--- | :--- |
