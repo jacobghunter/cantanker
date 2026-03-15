@@ -3,7 +3,7 @@
 The **Cantanker** case and plates were designed in FreeCAD. 
 You can find the source FCStd file [here](mechanical/Cantanker_Case_and_Plates.FCStd) print-ready exports below:
 
-| Part | Print-Ready (.STL) | CAD-Ready (.STEP) |
+| Part | STLs | STEPs |
 | :--- | :--- | :--- |
 | **Left Case** | [Download](mechanical/exports/Cantanker_Left_Case.stl) | [Download](mechanical/exports/Cantanker_Left_Case.step) |
 | **Right Case** | [Download](mechanical/exports/Cantanker_Right_Case.stl) | [Download](mechanical/exports/Cantanker_Right_Case.step) |
