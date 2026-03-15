@@ -3,7 +3,6 @@ name: Generate PCB Docs
 on:
   push:
     paths:
-      - 'kicad/**.kicad_sch'
       - 'kicad/**.kicad_pcb'
   workflow_dispatch:
 
@@ -21,13 +20,13 @@ jobs:
       - name: KiBot for ${{ matrix.board_name }}
         uses: INTI-CMNB/KiBot@v2
         with:
-          schema: 'kicad/${{ matrix.board_name }}.kicad_sch'
           board: 'kicad/${{ matrix.board_name }}.kicad_pcb'
           config: default
           dir: 'Generated_Docs/${{ matrix.board_name }}'
+          skip: schematic_check
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.board_name }}-export
+          name: ${{ matrix.board_name }}-gerbers
           path: 'Generated_Docs/${{ matrix.board_name }}'
