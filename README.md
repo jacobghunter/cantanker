@@ -1,12 +1,13 @@
 ![PXL_20260311_054345113](https://github.com/user-attachments/assets/74d0cc48-0b37-409a-a0bc-0dccf495e4b3)
-
-This is a custom wireless split ergo keyboard designed withwired with  case designed with 
+ 
 ## Tools/software Used:
 - [Ergogen](https://github.com/ergogen/ergogen) for layout and PCB generation as well as DXF files for case design
 - [KiCad](https://www.kicad.org/) to wire the PCB
 - [FreeCAD](https://www.freecad.org/) for case and plate design
 - [ZMK](https://zmk.dev/) for the wireless firmware
 - A slightly modified version of [this](https://github.com/AYM1607/zmk-driver-azoteq-iqs5xx) trackpad firmware by AYM1607
+
+A big thank you to all the awesome people who have contributed to these projects, all of this being free and open source is truly amazing!
 
 Its main features are:
 - Bluetooth low energy connectivity
