@@ -1,0 +1,29 @@
+kibot:
+  version: 1
+
+outputs:
+  - name: 'Gerbers'
+    comment: "Gerbers for the board"
+    type: gerber
+    dir: 'Gerbers'
+
+  - name: 'Drill'
+    comment: "Drill files for the board"
+    type: excellon
+    dir: 'Gerbers'
+
+  - name: '3D_Render_Top'
+    comment: "Top 3D view"
+    type: render_3d
+    options:
+      ray_tracing: true
+      view: top
+    dir: 'Renders'
+
+  - name: '3D_Render_Bottom'
+    comment: "Bottom 3D view"
+    type: render_3d
+    options:
+      ray_tracing: true
+      view: bottom
+    dir: 'Renders'
