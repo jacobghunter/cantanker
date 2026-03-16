@@ -6,6 +6,3 @@
 	path = zmk-driver-azoteq-iqs5xx
   url = git@github.com:jacobghunter/zmk-driver-azoteq-iqs5xx.git
   branch = main
-[submodule "zmk-input-gestures"]
-	path = zmk-input-gestures
-	url = git@github.com:jacobghunter/zmk-input-gestures.git
