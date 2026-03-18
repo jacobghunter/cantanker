@@ -29,6 +29,7 @@
 - gestures via different branch: https://github.com/petejohanson/zmk/tree/feat/pointers-move-scroll-ptp
 - currently the mouse layer deactivates when i stop moving my finger on the touchpad
   - figure out a way to emit an event when ready starts as active and emit another when it deactivates, having the mouse layer active the whole time
+- Try to fix initial startup non-responsiveness
 
 # Ideas
 
