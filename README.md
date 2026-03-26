@@ -1,7 +1,7 @@
 This is a split wireless keyboard running ZMK with custom PCB and case designs
 
-![PXL_20260311_054345113](https://github.com/user-attachments/assets/74d0cc48-0b37-409a-a0bc-0dccf495e4b3)
- 
+![PXL_20260326_034125895](https://github.com/user-attachments/assets/d54e8bab-0baf-4eab-ab14-6d032593541b)
+
 ## Tools/software Used:
 - [Ergogen](https://github.com/ergogen/ergogen) for layout and PCB generation as well as DXF files for case design
 - [KiCad](https://www.kicad.org/) to wire the PCB
