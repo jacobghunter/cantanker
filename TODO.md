@@ -51,3 +51,7 @@ Combos
 Sticky keys/layers?
 Gaming mode.
 Positional Hold-Tap?
+
+# Next time
+
+- MCU on the bottom of the PCB?
